@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사이버보험 인포그래픽 통합 모음 (IG003-IG015)</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-deep-blue: #00449E;
+            --color-bright-blue: #0380FE;
+            --color-success: #10b981;
+            --color-gray-50: #f9fafb;
+            --color-gray-600: #4b5563;
+            --color-gray-700: #374151;
+            --color-gray-900: #111827;
+            --color-white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--color-gray-900);
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            min-height: 100vh;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, #00449E 0%, #0380FE 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 68, 158, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .page-header .subtitle {
+            font-size: 1.25rem;
+            opacity: 0.95;
+            margin-bottom: 5px;
+        }
+        
+        .page-header .description {
+            font-size: 1rem;
+            opacity: 0.85;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .toc {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .toc h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--color-deep-blue);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .toc-item {
+            display: block;
+            padding: 15px 20px;
+            background: var(--color-gray-50);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--color-gray-700);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--color-bright-blue);
+        }
+        
+        .toc-item:hover {
+            background: var(--color-bright-blue);
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .toc-number {
+            font-weight: 700;
+            margin-right: 10px;
+            color: var(--color-bright-blue);
+        }
+        
+        .toc-item:hover .toc-number {
+            color: white;
+        }
+        
+        .infographic-section {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid var(--color-bright-blue);
+        }
+        
+        .section-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #00449E 0%, #0380FE 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .section-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: var(--color-deep-blue);
+            margin-bottom: 10px;
+        }
+        
+        .section-description {
+            font-size: 1rem;
+            color: var(--color-gray-600);
+        }
+        
+        .iframe-container {
+            width: 100%;
+            height: 800px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .original-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: var(--color-gray-50);
+            color: var(--color-deep-blue);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .original-link:hover {
+            background: var(--color-bright-blue);
+            color: white;
+        }
+        
+        .page-footer {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 60px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .page-footer h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-deep-blue);
+            margin-bottom: 15px;
+        }
+        
+        .page-footer p {
+            color: var(--color-gray-600);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #00449E 0%, #0380FE 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 68, 158, 0.3);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 68, 158, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 40px 20px;
+            }
+            
+            .page-header h1 {
+                font-size: 1.75rem;
+            }
+            
+            .page-header .subtitle {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .iframe-container {
+                height: 600px;
+            }
+            
+            .toc-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 페이지 헤더 -->
+    <div class="page-header">
+        <h1>🎯 사이버보험 전략 보고서</h1>
+        <div class="subtitle">인포그래픽 통합 모음 (IG003-IG015)</div>
+        <div class="description">ZOBIS 시스템 기반 전문직 협회 Affinity 전략 · 13개 인포그래픽</div>
+    </div>
+
+    <div class="container">
+        <!-- 목차 (Table of Contents) -->
+        <div class="toc">
+            <h2>📑 목차</h2>
+            <div class="toc-grid">
+                <a href="#ig003" class="toc-item">
+                    <span class="toc-number">IG003</span>
+                    ZOBIS 4단계 시스템 영업 프로세스
+                </a>
+                <a href="#ig004" class="toc-item">
+                    <span class="toc-number">IG004</span>
+                    시나리오별 5개년 재무 비교
+                </a>
+                <a href="#ig005" class="toc-item">
+                    <span class="toc-number">IG005</span>
+                    3단계 시장 선점 로드맵
+                </a>
+                <a href="#ig006" class="toc-item">
+                    <span class="toc-number">IG006</span>
+                    The Causation Trap
+                </a>
+                <a href="#ig007" class="toc-item">
+                    <span class="toc-number">IG007</span>
+                    ZOBIS 레버리지 효과
+                </a>
+                <a href="#ig008" class="toc-item">
+                    <span class="toc-number">IG008</span>
+                    Year 1 실행 로드맵
+                </a>
+                <a href="#ig009" class="toc-item">
+                    <span class="toc-number">IG009</span>
+                    Affinity 모델 경제적 우위
+                </a>
+                <a href="#ig010" class="toc-item">
+                    <span class="toc-number">IG010</span>
+                    의료 EMR 마비 시나리오
+                </a>
+                <a href="#ig011" class="toc-item">
+                    <span class="toc-number">IG011</span>
+                    KSA/KCA 리스크 비교
+                </a>
+                <a href="#ig012" class="toc-item">
+                    <span class="toc-number">IG012</span>
+                    글로벌 Affinity 벤치마크
+                </a>
+                <a href="#ig013" class="toc-item">
+                    <span class="toc-number">IG013</span>
+                    PI 보장 공백
+                </a>
+                <a href="#ig014" class="toc-item">
+                    <span class="toc-number">IG014</span>
+                    5대 전문직 경계 분쟁
+                </a>
+                <a href="#ig015" class="toc-item">
+                    <span class="toc-number">IG015</span>
+                    최종 승인 요청 Summary
+                </a>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- IG003: ZOBIS 4단계 시스템 영업 프로세스 -->
+        <!-- ============================================ -->
+        <div class="infographic-section" id="ig003">
+            <div class="section-header">
+                <div class="section-number">인포그래픽 #003</div>
+                <div class="section-title">ZOBIS 4단계 시스템 영업 프로세스</div>
+                <div class="section-description">AI 기반 자동화로 영업 프로세스의 94%를 효율화하는 혁신적 파이프라인</div>
+            </div>
+            <div class="iframe-container">
+                <iframe src="IG/2025/IG003/IG003_ZOBIS_4단계프로세스_v1.0.html"></iframe>
+            </div>
+            <a href="IG/2025/IG003/IG003_ZOBIS_4단계프로세스_v1.0.html" target="_blank" class="original-link">🔗 새 창에서 원본 보기</a>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- IG004: 시나리오별 5개년 재무 비교 -->
+        <!-- ============================================ -->
+        <div class="infographic-section" id="ig004">
+            <div class="section-header">
+                <div class="section-number">인포그래픽 #004</div>
+                <div class="section-title">시나리오별 5개년 재무 비교</div>
+                <div class="section-description">Worst / Base / Best Case 시나리오 분석을 통한 투자 타당성 검증</div>
+            </div>
+            <div class="iframe-container">
+                <iframe src="IG/2025/IG004/IG004_시나리오별_5개년_재무비교_v1.0.html"></iframe>
+            </div>
+            <a href="IG/2025/IG004/IG004_시나리오별_5개년_재무비교_v1.0.html" target="_blank" class="original-link">🔗 새 창에서 원본 보기</a>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- IG005: 3단계 시장 선점 로드맵 -->
+        <!-- ============================================ -->
+        <div class="infographic-section" id="ig005">
+            <div class="section-header">
+                <div class="section-number">인포그래픽 #005</div>
+                <div class="section-title">3단계 시장 선점 로드맵</div>
+                <div class="section-description">Pilot Success → Volume Expansion → Market Leadership</div>
+            </div>
+            <div class="iframe-container">
+                <iframe src="IG/2025/IG005/IG005_3단계_시장선점_로드맵_v1.0.html"></iframe>
+            </div>
+            <a href="IG/2025/IG005/IG005_3단계_시장선점_로드맵_v1.0.html" target="_blank" class="original-link">🔗 새 창에서 원본 보기</a>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- IG006: The Causation Trap -->
+        <!-- ============================================ -->
+        <div class="infographic-section" id="ig006">
+            <div class="section-header">
+                <div class="section-number">인포그래픽 #006</div>
+                <div class="section-title">The Causation Trap</div>
+                <div class="section-description">원인 기반 면책의 이중 함정 - 사이버 사고 시 PI와 Cyber 보험 경계 분쟁</div>
+            </div>
+            <div class="iframe-container">
+                <iframe src="IG/2025/IG006/IG006_The_Causation_Trap_v1.0.html"></iframe>
+            </div>
+            <a href="IG/2025/IG006/IG006_The_Causation_Trap_v1.0.html" target="_blank" class="original-link">🔗 새 창에서 원본 보기</a>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- IG007: ZOBIS 레버리지 효과 -->
+        <!-- ============================================ -->
+        <div class="infographic-section" id="ig007">
+            <div class="section-header">
+                <div class="section-number">인포그래픽 #007</div>
+                <div class="section-title">ZOBIS 레버리지 효과</div>
+                <div class="section-description">전통 모델 vs. AI 자동화 모델의 경제적 비교 - 5년 누적 84억 원 절감</div>
+            </div>
+            <div class="iframe-container">
+                <iframe src="IG/2025/IG007/IG007_ZOBIS_레버리지_효과_v1.0.html"></iframe>
+            </div>
+            <a href="IG/2025/IG007/IG007_ZOBIS_레버리지_효과_v1.0.html" target="_blank" class="original-link">🔗 새 창에서 원본 보기</a>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- IG008: Year 1 실행 로드맵 -->
+        <!-- ============================================ -->
+        <div class="infographic-section" id="ig008">
+            <div class="section-header">
+                <div class="section-number">인포그래픽 #008</div>
+                <div class="section-title">Year 1 실행 로드맵</div>
+                <div class="section-description">12개월 4개 트랙 실행 계획 (Gantt Chart)</div>
+            </div>
+            <div class="iframe-container">
+                <iframe src="IG/2025/IG008/IG008_Year1_실행로드맵_v1.0.html"></iframe>
+            </div>
+            <a href="IG/2025/IG008/IG008_Year1_실행로드맵_v1.0.html" target="_blank" class="original-link">🔗 새 창에서 원본 보기</a>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- IG009: Affinity 모델 경제적 우위 -->
+        <!-- ============================================ -->
+        <div class="infographic-section" id="ig009">
+            <div class="section-header">
+                <div class="section-number">인포그래픽 #009</div>
+                <div class="section-title">Affinity 모델의 경제적 우위</div>
+                <div class="section-description">B2C vs. 협회 기반 Affinity 구매 여정 비교 - CAC 1/10 절감</div>
+            </div>
+            <div class="iframe-container">
+                <iframe src="IG/2025/IG009/IG009_Affinity_모델_경제적_우위_v1.0.html"></iframe>
+            </div>
+            <a href="IG/2025/IG009/IG009_Affinity_모델_경제적_우위_v1.0.html" target="_blank" class="original-link">🔗 새 창에서 원본 보기</a>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- IG010: 의료 EMR 마비 시나리오 -->
+        <!-- ============================================ -->
+        <div class="infographic-section" id="ig010">
+            <div class="section-header">
+                <div class="section-number">인포그래픽 #010</div>
+                <div class="section-title">의료 협회군 사이버 리스크의 치명성</div>
+                <div class="section-description">EMR 마비 시나리오 - 3가지 연쇄 리스크 분기 (PI/규제/BI)</div>
+            </div>
+            <div class="iframe-container">
+                <iframe src="IG/2025/IG010/IG010_의료_EMR_마비_시나리오_v1.0.html"></iframe>
+            </div>
+            <a href="IG/2025/IG010/IG010_의료_EMR_마비_시나리오_v1.0.html" target="_blank" class="original-link">🔗 새 창에서 원본 보기</a>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- IG011: KSA/KCA 리스크 비교 -->
+        <!-- ============================================ -->
+        <div class="infographic-section" id="ig011">
+            <div class="section-header">
+                <div class="section-number">인포그래픽 #011</div>
+                <div class="section-title">파일럿 시장 KSA/KCA 리스크 비교</div>
+                <div class="section-description">한국세무사회 vs. 한국관세사회 핵심 리스크 프로파일</div>
+            </div>
+            <div class="iframe-container">
+                <iframe src="IG/2025/IG011/IG011_KSA_KCA_리스크_비교_v1.0.html"></iframe>
+            </div>
+            <a href="IG/2025/IG011/IG011_KSA_KCA_리스크_비교_v1.0.html" target="_blank" class="original-link">🔗 새 창에서 원본 보기</a>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- IG012: 글로벌 Affinity 벤치마크 -->
+        <!-- ============================================ -->
+        <div class="infographic-section" id="ig012">
+            <div class="section-header">
+                <div class="section-number">인포그래픽 #012</div>
+                <div class="section-title">글로벌 Affinity 모델 성공 사례</div>
+                <div class="section-description">미국 ABA · 영국 BMA vs. 록톤 코리아 전략 벤치마킹</div>
+            </div>
+            <div class="iframe-container">
+                <iframe src="IG/2025/IG012/IG012_글로벌_Affinity_벤치마크_v1.0.html"></iframe>
+            </div>
+            <a href="IG/2025/IG012/IG012_글로벌_Affinity_벤치마크_v1.0.html" target="_blank" class="original-link">🔗 새 창에서 원본 보기</a>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- IG013: PI 보장 공백 -->
+        <!-- ============================================ -->
+        <div class="infographic-section" id="ig013">
+            <div class="section-header">
+                <div class="section-number">인포그래픽 #013</div>
+                <div class="section-title">PI 정책의 보장 공백</div>
+                <div class="section-description">PIPA 규제 리스크는 누가 담보하는가? (벤 다이어그램)</div>
+            </div>
+            <div class="iframe-container">
+                <iframe src="IG/2025/IG013/IG013_PI_보장_공백_v1.0.html"></iframe>
+            </div>
+            <a href="IG/2025/IG013/IG013_PI_보장_공백_v1.0.html" target="_blank" class="original-link">🔗 새 창에서 원본 보기</a>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- IG014: 5대 전문직 경계 분쟁 -->
+        <!-- ============================================ -->
+        <div class="infographic-section" id="ig014">
+            <div class="section-header">
+                <div class="section-number">인포그래픽 #014</div>
+                <div class="section-title">5대 전문직 경계 분쟁 시나리오</div>
+                <div class="section-description">사이버 원인 → PI 결과: 분리된 보험의 함정</div>
+            </div>
+            <div class="iframe-container">
+                <iframe src="IG/2025/IG014/IG014_5대_전문직_경계_분쟁_v1.0.html"></iframe>
+            </div>
+            <a href="IG/2025/IG014/IG014_5대_전문직_경계_분쟁_v1.0.html" target="_blank" class="original-link">🔗 새 창에서 원본 보기</a>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- IG015: 최종 승인 요청 Summary -->
+        <!-- ============================================ -->
+        <div class="infographic-section" id="ig015">
+            <div class="section-header">
+                <div class="section-number">인포그래픽 #015</div>
+                <div class="section-title">최종 승인 요청 Summary - The Ask</div>
+                <div class="section-description">ZOBIS 프로젝트 결재 요청 - 투자 3억 → 5년 누적 순이익 27.6억</div>
+            </div>
+            <div class="iframe-container">
+                <iframe src="IG/2025/IG015/IG015_최종_승인_요청_Summary_v1.0.html"></iframe>
+            </div>
+            <a href="IG/2025/IG015/IG015_최종_승인_요청_Summary_v1.0.html" target="_blank" class="original-link">🔗 새 창에서 원본 보기</a>
+        </div>
+
+        <!-- 페이지 푸터 -->
+        <div class="page-footer">
+            <h3>📊 사이버보험 전략 인포그래픽 통합 완료</h3>
+            <p>
+                <strong>총 13개 인포그래픽</strong>을 하나의 페이지에 통합했습니다.<br>
+                각 인포그래픽은 독립적으로 작동하며, 원본 파일로 직접 이동할 수도 있습니다.
+            </p>
+            <p style="margin-top: 20px; font-size: 0.875rem; color: var(--color-gray-600);">
+                &copy; 2025 ZOBIS 팀 · 조대표 · 나실장 · 선과장 · 서대리 · 박팀장
+            </p>
+        </div>
+    </div>
+
+    <!-- 맨 위로 버튼 -->
+    <button class="back-to-top" onclick="scrollToTop()" id="backToTopBtn">
+        ↑
+    </button>
+
+    <script>
+        // 맨 위로 버튼 표시/숨김
+        window.addEventListener('scroll', function() {
+            const btn = document.getElementById('backToTopBtn');
+            if (window.pageYOffset > 300) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+        });
+
+        // 맨 위로 스크롤
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // 부드러운 스크롤 (목차 링크)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

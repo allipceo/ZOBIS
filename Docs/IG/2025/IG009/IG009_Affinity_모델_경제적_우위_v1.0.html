@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IG009 - Affinity 모델의 경제적 우위</title>
+    
+    <!--
+    ============================================
+    인포그래픽 #9: Affinity 모델의 경제적 우위
+    ============================================
+    
+    목적:
+    - Affinity 모델이 B2C 대비 경제적으로 월등히 우수함을 입증
+    
+    핵심 메시지:
+    - Affinity 모델은 B2C 대비 CAC를 1/10로 절감하고
+      구매 여정을 5단계에서 2단계로 단축하여 전환율을 극대화합니다
+    
+    데이터 출처:
+    - CI020 p.9 (Line 168-170)
+    
+    적용 위치:
+    - CI020 Section II (Affinity 모델), Line 170 직후
+    
+    버전 이력:
+    - v1.0 (2025-10-25): 초안 생성 (서대리)
+    
+    ============================================
+    -->
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../Assets/common.css">
+    
+    <style>
+        .comparison-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin: 40px 0;
+        }
+        
+        .funnel-box {
+            background: white;
+            padding: 30px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .funnel-box.b2c {
+            border: 3px solid #ef4444;
+        }
+        
+        .funnel-box.affinity {
+            border: 3px solid #10b981;
+        }
+        
+        .funnel-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .funnel-title.b2c {
+            color: #dc2626;
+        }
+        
+        .funnel-title.affinity {
+            color: #059669;
+        }
+        
+        .funnel-subtitle {
+            text-align: center;
+            color: var(--color-gray-600);
+            margin-bottom: 30px;
+            font-size: var(--font-size-sm);
+        }
+        
+        .funnel-stage {
+            position: relative;
+            margin: 15px auto;
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .funnel-stage:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .stage-b2c-1 {
+            width: 100%;
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border: 2px solid #f87171;
+        }
+        
+        .stage-b2c-2 {
+            width: 80%;
+            background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);
+            border: 2px solid #fb923c;
+        }
+        
+        .stage-b2c-3 {
+            width: 60%;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid #fbbf24;
+        }
+        
+        .stage-b2c-4 {
+            width: 40%;
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border: 2px solid #60a5fa;
+        }
+        
+        .stage-b2c-5 {
+            width: 20%;
+            background: linear-gradient(135deg, #fecaca 0%, #ef4444 100%);
+            border: 2px solid #dc2626;
+            color: white;
+            font-weight: 700;
+        }
+        
+        .stage-affinity-1 {
+            width: 100%;
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border: 2px solid #6ee7b7;
+        }
+        
+        .stage-affinity-2 {
+            width: 70%;
+            background: linear-gradient(135deg, #86efac 0%, #10b981 100%);
+            border: 2px solid #059669;
+            color: white;
+            font-weight: 700;
+        }
+        
+        .stage-number {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: white;
+            color: #1a1a1a;
+            font-weight: 700;
+            line-height: 28px;
+            margin-right: 8px;
+            font-size: 14px;
+        }
+        
+        .stage-label {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+        }
+        
+        .stage-rate {
+            font-size: var(--font-size-sm);
+            margin-top: 5px;
+            opacity: 0.9;
+        }
+        
+        .arrow-down {
+            text-align: center;
+            font-size: 24px;
+            color: var(--color-gray-400);
+            margin: 5px 0;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .metric-card {
+            padding: 25px;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            color: white;
+        }
+        
+        .metric-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .metric-label {
+            font-size: var(--font-size-sm);
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+        
+        .metric-value {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            margin-top: 40px;
+            border-collapse: collapse;
+            background: white;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .comparison-table th {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 15px;
+            font-weight: 700;
+            text-align: left;
+        }
+        
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--color-gray-200);
+        }
+        
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .comparison-table .label-col {
+            font-weight: 600;
+            color: var(--color-gray-700);
+        }
+        
+        .comparison-table .b2c-col {
+            color: #dc2626;
+            font-weight: 600;
+        }
+        
+        .comparison-table .affinity-col {
+            color: #059669;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .comparison-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Affinity 모델의 경제적 우위</h1>
+            <p>B2C vs. 협회 기반 Affinity 구매 여정 비교</p>
+        </div>
+        
+        <!-- 깔때기 비교 -->
+        <div class="comparison-container">
+            <!-- B2C 모델 -->
+            <div class="funnel-box b2c">
+                <div class="funnel-title b2c">😰 B2C 모델</div>
+                <div class="funnel-subtitle">긴 여정 · 높은 CAC · 낮은 전환율</div>
+                
+                <div class="funnel-stage stage-b2c-1">
+                    <span class="stage-number">1</span>
+                    <span class="stage-label">광고 노출</span>
+                    <div class="stage-rate">100,000명 도달</div>
+                </div>
+                <div class="arrow-down">↓</div>
+                
+                <div class="funnel-stage stage-b2c-2">
+                    <span class="stage-number">2</span>
+                    <span class="stage-label">인지</span>
+                    <div class="stage-rate">10,000명 (10%)</div>
+                </div>
+                <div class="arrow-down">↓</div>
+                
+                <div class="funnel-stage stage-b2c-3">
+                    <span class="stage-number">3</span>
+                    <span class="stage-label">관심</span>
+                    <div class="stage-rate">1,000명 (1%)</div>
+                </div>
+                <div class="arrow-down">↓</div>
+                
+                <div class="funnel-stage stage-b2c-4">
+                    <span class="stage-number">4</span>
+                    <span class="stage-label">비교 검토</span>
+                    <div class="stage-rate">200명 (0.2%)</div>
+                </div>
+                <div class="arrow-down">↓</div>
+                
+                <div class="funnel-stage stage-b2c-5">
+                    <span class="stage-number">5</span>
+                    <span class="stage-label">구매</span>
+                    <div class="stage-rate">50명 (0.05%)</div>
+                </div>
+            </div>
+            
+            <!-- Affinity 모델 -->
+            <div class="funnel-box affinity">
+                <div class="funnel-title affinity">✅ Affinity 모델</div>
+                <div class="funnel-subtitle">짧은 여정 · 낮은 CAC · 높은 전환율</div>
+                
+                <div class="funnel-stage stage-affinity-1">
+                    <span class="stage-number">1</span>
+                    <span class="stage-label">협회 공지</span>
+                    <div class="stage-rate">15,000명 도달 (즉시 신뢰)</div>
+                </div>
+                <div class="arrow-down" style="margin: 80px 0;">↓</div>
+                
+                <div class="funnel-stage stage-affinity-2">
+                    <span class="stage-number">2</span>
+                    <span class="stage-label">단체 구매</span>
+                    <div class="stage-rate">750명 (5%)</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 핵심 지표 -->
+        <div class="metrics-grid">
+            <div class="metric-card" style="background: var(--gradient-danger);">
+                <div class="metric-icon">💰</div>
+                <div class="metric-label">CAC 절감</div>
+                <div class="metric-value">1/10</div>
+            </div>
+            
+            <div class="metric-card" style="background: var(--gradient-success);">
+                <div class="metric-icon">⚡</div>
+                <div class="metric-label">여정 단축</div>
+                <div class="metric-value">5→2단계</div>
+            </div>
+            
+            <div class="metric-card" style="background: var(--gradient-info);">
+                <div class="metric-icon">📈</div>
+                <div class="metric-label">전환율 향상</div>
+                <div class="metric-value">100배</div>
+            </div>
+        </div>
+        
+        <!-- 비교 테이블 -->
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>지표</th>
+                    <th>B2C 모델</th>
+                    <th>Affinity 모델</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="label-col">구매 여정</td>
+                    <td class="b2c-col">5단계 (긴 여정)</td>
+                    <td class="affinity-col">2단계 (짧은 여정)</td>
+                </tr>
+                <tr>
+                    <td class="label-col">최종 전환율</td>
+                    <td class="b2c-col">0.05% (50/100,000)</td>
+                    <td class="affinity-col">5% (750/15,000)</td>
+                </tr>
+                <tr>
+                    <td class="label-col">CAC (고객 획득 비용)</td>
+                    <td class="b2c-col">KRW 200,000</td>
+                    <td class="affinity-col">KRW 20,000</td>
+                </tr>
+                <tr>
+                    <td class="label-col">초기 신뢰도</td>
+                    <td class="b2c-col">❌ 낮음 (광고 의심)</td>
+                    <td class="affinity-col">✅ 높음 (협회 보증)</td>
+                </tr>
+                <tr>
+                    <td class="label-col">마케팅 비용</td>
+                    <td class="b2c-col">KRW 10,000,000 (50명 확보)</td>
+                    <td class="affinity-col">KRW 1,000,000 (750명 확보)</td>
+                </tr>
+                <tr>
+                    <td class="label-col">평균 계약 기간</td>
+                    <td class="b2c-col">3개월 (긴 검토)</td>
+                    <td class="affinity-col">1주일 (즉시 결정)</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div style="margin-top: 40px; padding: 25px; background: #d1fae5; border-left: 5px solid #10b981; border-radius: 8px;">
+            <h3 style="color: #065f46; margin-bottom: 10px; font-size: 18px; font-weight: 700;">💡 핵심 인사이트</h3>
+            <p style="color: #064e3b; font-size: 15px; line-height: 1.7;">
+                Affinity 모델은 협회의 공신력을 활용하여 <strong>초기 신뢰를 확보</strong>하고, 
+                구매 여정을 5단계에서 2단계로 단축하여 <strong>전환율을 100배 향상</strong>시킵니다. 
+                결과적으로 B2C 대비 <strong>CAC를 1/10로 절감</strong>하여 마케팅 비용 효율을 극대화합니다.
+            </p>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2025 ZOBIS. Affinity 모델 경제성 분석.</p>
+        </div>
+    </div>
+</body>
+</html>
+

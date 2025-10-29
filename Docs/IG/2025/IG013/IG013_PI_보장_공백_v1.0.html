@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IG013 - PI 정책의 보장 공백</title>
+    
+    <!--
+    ============================================
+    인포그래픽 #13: PI 정책의 보장 공백 (벤 다이어그램)
+    ============================================
+    
+    목적:
+    - PI 보험이 PIPA 규제 리스크를 커버하지 못함을 시각화
+    
+    핵심 메시지:
+    - 전통적 PI 보험은 전문가 과실만 보장하며, 
+      PIPA 규제 리스크는 보장 범위 밖으로 치명적 공백이 발생합니다
+    
+    데이터 출처:
+    - CI020 p.11 (Line 239-241)
+    
+    적용 위치:
+    - CI020 Section II (규제 리스크), Line 241 직후
+    
+    버전 이력:
+    - v1.0 (2025-10-25): 초안 생성 (서대리)
+    
+    ============================================
+    -->
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../Assets/common.css">
+    
+    <style>
+        .venn-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 50px;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .venn-diagram {
+            position: relative;
+            height: 500px;
+            margin: 40px 0;
+        }
+        
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 30px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        
+        .circle:hover {
+            transform: scale(1.05);
+        }
+        
+        .circle-pi {
+            width: 350px;
+            height: 350px;
+            background: rgba(59, 130, 246, 0.3);
+            border: 4px solid #3b82f6;
+            left: 50px;
+            top: 75px;
+        }
+        
+        .circle-pipa {
+            width: 350px;
+            height: 350px;
+            background: rgba(239, 68, 68, 0.3);
+            border: 4px solid #ef4444;
+            right: 50px;
+            top: 75px;
+        }
+        
+        .gap-indicator {
+            position: absolute;
+            width: 150px;
+            height: 250px;
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border: 5px solid #dc2626;
+            right: 50px;
+            top: 125px;
+            border-radius: 75px 0 0 75px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            z-index: 10;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(220, 38, 38, 0.8);
+            }
+        }
+        
+        .gap-text {
+            font-size: var(--font-size-xl);
+            font-weight: 700;
+            color: #991b1b;
+        }
+        
+        .circle-title {
+            font-size: var(--font-size-2xl);
+            margin-bottom: 15px;
+        }
+        
+        .circle-pi .circle-title {
+            color: #1e40af;
+        }
+        
+        .circle-pipa .circle-title {
+            color: #991b1b;
+        }
+        
+        .circle-content {
+            font-size: var(--font-size-sm);
+            line-height: 1.8;
+            text-align: center;
+        }
+        
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .legend-box {
+            padding: 25px;
+            border-radius: var(--radius-lg);
+            border: 3px solid;
+        }
+        
+        .legend-box.pi {
+            border-color: #3b82f6;
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+        }
+        
+        .legend-box.pipa {
+            border-color: #ef4444;
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+        }
+        
+        .legend-title {
+            font-size: var(--font-size-xl);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .legend-title.pi {
+            color: #1e40af;
+        }
+        
+        .legend-title.pipa {
+            color: #991b1b;
+        }
+        
+        .legend-list {
+            font-size: var(--font-size-base);
+            line-height: 2;
+            color: var(--color-gray-800);
+        }
+        
+        .risk-examples {
+            margin-top: 40px;
+            background: #fef3c7;
+            padding: 30px;
+            border-radius: var(--radius-lg);
+            border-left: 5px solid #f59e0b;
+        }
+        
+        .risk-title {
+            font-size: var(--font-size-xl);
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 20px;
+        }
+        
+        .risk-scenario {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .scenario-label {
+            font-weight: 700;
+            color: #dc2626;
+            margin-bottom: 8px;
+        }
+        
+        .scenario-desc {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray-700);
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            .venn-diagram {
+                height: 600px;
+            }
+            
+            .circle {
+                width: 250px !important;
+                height: 250px !important;
+                padding: 20px;
+            }
+            
+            .circle-pi {
+                left: 20px;
+                top: 50px;
+            }
+            
+            .circle-pipa {
+                right: 20px;
+                top: 300px;
+            }
+            
+            .gap-indicator {
+                width: 120px;
+                height: 180px;
+                right: 60px;
+                top: 200px;
+            }
+            
+            .legend-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>PI 정책의 보장 공백</h1>
+            <h2 style="font-size: 1.5rem; color: #dc2626; margin-top: 10px;">PIPA 규제 리스크는 누가 담보하는가?</h2>
+            <p>전문가 배상책임(PI) vs. 개인정보보호법(PIPA) 리스크</p>
+        </div>
+        
+        <!-- 벤 다이어그램 -->
+        <div class="venn-container">
+            <div class="venn-diagram">
+                <!-- PI 보험 원 -->
+                <div class="circle circle-pi">
+                    <div class="circle-title">📋 PI 보험</div>
+                    <div class="circle-content">
+                        <strong>보장 범위:</strong><br>
+                        전문가 과실<br>
+                        업무상 실수<br>
+                        설계·자문 오류<br>
+                        직업적 태만
+                    </div>
+                </div>
+                
+                <!-- PIPA 리스크 원 -->
+                <div class="circle circle-pipa">
+                    <div class="circle-title">⚠️ PIPA 리스크</div>
+                    <div class="circle-content">
+                        <strong>규제 리스크:</strong><br>
+                        정보 유출 과징금<br>
+                        PIPA 조사 비용<br>
+                        시정 명령<br>
+                        형사 처벌
+                    </div>
+                </div>
+                
+                <!-- 보장 공백 표시 -->
+                <div class="gap-indicator">
+                    <div class="gap-text">
+                        ⛔<br>
+                        보장<br>
+                        공백
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 범례 -->
+        <div class="legend-grid">
+            <div class="legend-box pi">
+                <div class="legend-title pi">📋 PI 보험 보장 항목</div>
+                <div class="legend-list">
+                    ✓ 전문가 과실로 인한 손해배상<br>
+                    ✓ 소송 방어 비용<br>
+                    ✓ 합의금·판결금<br>
+                    ✓ 직업적 태만 클레임<br>
+                    ❌ <strong style="color: #dc2626;">사이버 공격으로 인한 정보 유출</strong><br>
+                    ❌ <strong style="color: #dc2626;">PIPA 과징금</strong>
+                </div>
+            </div>
+            
+            <div class="legend-box pipa">
+                <div class="legend-title pipa">⚠️ PIPA 규제 리스크</div>
+                <div class="legend-list">
+                    ⚠️ 과징금 (매출액의 3% 또는 KRW 5억)<br>
+                    ⚠️ 개인정보보호위원회 조사 비용<br>
+                    ⚠️ 시정 명령 이행 비용<br>
+                    ⚠️ 형사 처벌 (3년 이하 징역)<br>
+                    ⚠️ 집단 소송 방어 비용<br>
+                    ⚠️ 평판 회복 비용
+                </div>
+            </div>
+        </div>
+        
+        <!-- 실제 사례 -->
+        <div class="risk-examples">
+            <div class="risk-title">🚨 실제 보장 공백 사례</div>
+            
+            <div class="risk-scenario">
+                <div class="scenario-label">사례 1: 세무사 사무실 랜섬웨어 공격</div>
+                <div class="scenario-desc">
+                    <strong>상황:</strong> 사이버 공격으로 고객 정보 3,000건 유출 → PIPA 조사 개시<br>
+                    <strong>PI 보험:</strong> "사이버 공격은 면책 사유" → ❌ 거절<br>
+                    <strong>결과:</strong> 세무사가 자비로 과징금 KRW 2억 + 조사 비용 KRW 3천만 부담
+                </div>
+            </div>
+            
+            <div class="risk-scenario">
+                <div class="scenario-label">사례 2: 병원 EMR 시스템 해킹</div>
+                <div class="scenario-desc">
+                    <strong>상황:</strong> 환자 정보 10만 건 유출 → PIPA 위반 과징금 KRW 5억 부과<br>
+                    <strong>PI 보험:</strong> "개인정보보호법 위반은 담보 범위 외" → ❌ 거절<br>
+                    <strong>결과:</strong> 병원이 전액 부담 + 평판 훼손으로 환자 이탈 20%
+                </div>
+            </div>
+            
+            <div class="risk-scenario">
+                <div class="scenario-label">사례 3: 변호사 사무실 내부자 정보 유출</div>
+                <div class="scenario-desc">
+                    <strong>상황:</strong> 직원이 의뢰인 정보 500건 불법 판매 → PIPA 조사 + 형사 고발<br>
+                    <strong>PI 보험:</strong> "내부자 범죄는 PI 약관 면책 조항" → ❌ 거절<br>
+                    <strong>결과:</strong> 변호사가 과징금 + 형사 방어 비용 KRW 1.5억 자비 부담
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 40px; padding: 25px; background: #fef3c7; border-left: 5px solid #f59e0b; border-radius: 8px;">
+            <h3 style="color: #92400e; margin-bottom: 10px; font-size: 18px; font-weight: 700;">💡 핵심 인사이트</h3>
+            <p style="color: #78350f; font-size: 15px; line-height: 1.7;">
+                전통적 PI 보험은 <strong>전문가 과실만 보장</strong>하며, 사이버 공격으로 인한 정보 유출과 
+                PIPA 규제 리스크는 <strong>보장 범위 밖</strong>입니다. 이는 전문직에게 <strong>치명적인 보장 공백</strong>을 초래하며, 
+                록톤 듀얼 상품만이 <strong>PI + 사이버 + PIPA 규제 리스크를 통합 보장</strong>하여 이 공백을 완전히 메웁니다.
+            </p>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2025 ZOBIS. PI 보장 공백 분석.</p>
+        </div>
+    </div>
+</body>
+</html>
+

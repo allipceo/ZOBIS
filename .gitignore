@@ -1,0 +1,80 @@
+# ZOBIS Security - 절대 외부 노출 금지
+# Author: 서대리 (Cursor AI)
+# Date: 2025-01-17
+
+# 보안 파일들 (절대 커밋 금지)
+.env
+.env.local
+.env.production
+.env.staging
+secure_config.json
+*.key
+*.pem
+*.p12
+*.pfx
+
+# 로그 파일들
+logs/
+*.log
+
+# 임시 파일들
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# IDE 설정
+.vscode/
+.idea/
+*.sublime-*
+
+# OS 생성 파일
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Python 캐시
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 가상환경
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# 데이터베이스
+*.db
+*.sqlite
+*.sqlite3
+
+# 백업 파일
+*.bak
+*.backup
+*.old
+
+
+
+
+
+
+

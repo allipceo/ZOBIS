@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IG006 - The Causation Trap</title>
+    
+    <!--
+    ============================================
+    인포그래픽 #6: The Causation Trap - 원인 기반 면책의 이중 함정
+    ============================================
+    
+    목적:
+    - PI-사이버 듀얼 상품의 논리적 필요성을 명확히 입증
+    
+    핵심 메시지:
+    - 사이버 사고 발생 시 PI와 Cyber 보험이 서로 면책을 주장하여
+      피보험자가 이중 함정에 빠지는 보장 공백을 시각화합니다
+    
+    데이터 출처:
+    - CI020 p.25 (Line 665-667)
+    
+    적용 위치:
+    - CI020 Section IV (PI-사이버 듀얼 당위성), Line 667 직후
+    
+    버전 이력:
+    - v1.0 (2025-10-25): 초안 생성 (서대리)
+    
+    ============================================
+    -->
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../Assets/common.css">
+    
+    <style>
+        .diagram-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 40px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .flow-diagram {
+            display: grid;
+            grid-template-columns: 1fr 300px 1fr;
+            gap: 30px;
+            align-items: center;
+            margin: 40px 0;
+        }
+        
+        .side-box {
+            background: white;
+            padding: 25px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .side-box.left {
+            border: 3px solid #fbbf24;
+        }
+        
+        .side-box.right {
+            border: 3px solid #60a5fa;
+        }
+        
+        .box-title {
+            font-size: var(--font-size-xl);
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .box-title.left {
+            color: #f59e0b;
+        }
+        
+        .box-title.right {
+            color: #3b82f6;
+        }
+        
+        .flow-step {
+            padding: 12px;
+            margin: 10px 0;
+            background: var(--color-gray-50);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-sm);
+            text-align: center;
+            border-left: 4px solid var(--color-gray-300);
+        }
+        
+        .flow-arrow {
+            font-size: 24px;
+            text-align: center;
+            color: var(--color-gray-400);
+            margin: 5px 0;
+        }
+        
+        .rejection {
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            padding: 20px;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .rejection-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        
+        .rejection-text {
+            font-size: var(--font-size-base);
+            font-weight: 700;
+            color: #991b1b;
+        }
+        
+        .rejection-reason {
+            font-size: var(--font-size-sm);
+            color: #7f1d1d;
+            margin-top: 8px;
+        }
+        
+        .center-box {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border: 4px solid #dc2626;
+            padding: 30px 20px;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            box-shadow: 0 0 30px rgba(220, 38, 38, 0.3);
+        }
+        
+        .incident-icon {
+            font-size: 64px;
+            margin-bottom: 15px;
+        }
+        
+        .incident-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            color: #991b1b;
+            margin-bottom: 10px;
+        }
+        
+        .incident-subtitle {
+            font-size: var(--font-size-base);
+            color: #7f1d1d;
+            line-height: 1.6;
+        }
+        
+        .coverage-gap {
+            background: #7f1d1d;
+            color: white;
+            padding: 30px;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .gap-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .gap-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .gap-description {
+            font-size: var(--font-size-base);
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+        
+        .solution-box {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border: 3px solid #10b981;
+            padding: 25px;
+            border-radius: var(--radius-lg);
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .solution-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        
+        .solution-title {
+            font-size: var(--font-size-xl);
+            font-weight: 700;
+            color: #065f46;
+            margin-bottom: 10px;
+        }
+        
+        .solution-text {
+            font-size: var(--font-size-base);
+            color: #064e3b;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            .flow-diagram {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .diagram-container {
+                padding: 20px;
+            }
+            
+            .side-box {
+                min-height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>The Causation Trap</h1>
+            <h2 style="font-size: 1.5rem; color: #dc2626; margin-top: 10px;">원인 기반 면책의 이중 함정</h2>
+            <p>사이버 사고 시 PI와 Cyber 보험이 모두 면책을 주장하는 보장 공백</p>
+        </div>
+        
+        <div class="diagram-container">
+            <div class="flow-diagram">
+                <!-- 좌측: PI 보험 -->
+                <div class="side-box left">
+                    <div>
+                        <div class="box-title left">📋 PI 보험</div>
+                        <p style="text-align: center; color: #6b7280; font-size: 14px; margin-bottom: 20px;">
+                            전문가 책임보험
+                        </p>
+                        
+                        <div class="flow-step">
+                            1️⃣ 피보험자가 청구
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            2️⃣ 보험사 원인 분석
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step" style="background: #fef3c7; border-color: #f59e0b; font-weight: 600;">
+                            3️⃣ "사고 원인이<br>사이버 행위"
+                        </div>
+                    </div>
+                    
+                    <div class="rejection">
+                        <div class="rejection-icon">❌</div>
+                        <div class="rejection-text">면책 주장</div>
+                        <div class="rejection-reason">
+                            "랜섬웨어는<br>PI 약관 면책 사유"
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 중앙: 사이버 사고 -->
+                <div class="center-box">
+                    <div class="incident-icon">⚠️</div>
+                    <div class="incident-title">사이버 사고<br>발생</div>
+                    <div class="incident-subtitle">
+                        예: 세무사 사무실<br>랜섬웨어 감염<br><br>
+                        ↓<br><br>
+                        신고 지연<br>고객 가산세 발생<br><br>
+                        ↓<br><br>
+                        손해배상 청구
+                    </div>
+                </div>
+                
+                <!-- 우측: 사이버 보험 -->
+                <div class="side-box right">
+                    <div>
+                        <div class="box-title right">🛡️ 사이버 보험</div>
+                        <p style="text-align: center; color: #6b7280; font-size: 14px; margin-bottom: 20px;">
+                            일반 사이버보험 (B2C)
+                        </p>
+                        
+                        <div class="flow-step">
+                            1️⃣ 피보험자가 청구
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            2️⃣ 보험사 결과 분석
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step" style="background: #dbeafe; border-color: #3b82f6; font-weight: 600;">
+                            3️⃣ "손해 결과가<br>업무상 책임(PI)"
+                        </div>
+                    </div>
+                    
+                    <div class="rejection">
+                        <div class="rejection-icon">❌</div>
+                        <div class="rejection-text">면책 주장</div>
+                        <div class="rejection-reason">
+                            "고객 손해배상은<br>담보 범위 외"
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 보장 공백 -->
+            <div class="coverage-gap">
+                <div class="gap-icon">⛔</div>
+                <div class="gap-title">보장 공백 (Coverage Gap)</div>
+                <div class="gap-description">
+                    피보험자는 <strong>어느 보험으로부터도 보상받지 못하는</strong> 이중 면책 함정에 빠집니다.<br>
+                    이것이 바로 "The Causation Trap"입니다.
+                </div>
+            </div>
+        </div>
+        
+        <!-- 솔루션 -->
+        <div class="solution-box">
+            <div class="solution-icon">✅</div>
+            <div class="solution-title">록톤 듀얼 상품의 해결책</div>
+            <div class="solution-text">
+                <strong>원인-결과 통합 보장</strong>으로 사이버 원인 → PI 결과의 전체 연쇄 과정을 
+                단일 보험으로 보장하여 <strong>경계 분쟁을 원천 차단</strong>합니다.<br><br>
+                랜섬웨어 복구비용 + 영업중단(BI) + 고객 손해배상(PI) = <strong>완전 보장</strong>
+            </div>
+        </div>
+        
+        <div style="margin-top: 40px; padding: 25px; background: #fef3c7; border-left: 5px solid #f59e0b; border-radius: 8px;">
+            <h3 style="color: #92400e; margin-bottom: 10px; font-size: 18px; font-weight: 700;">⚖️ 법률적 근거</h3>
+            <p style="color: #78350f; font-size: 15px; line-height: 1.7;">
+                영국 법률협회(The Law Society)는 <em>"당신의 전문인 배상 책임 보험 내 사이버 면책 조항을 이해하라. 
+                많은 PI 정책들이 사이버 공격으로 인한 손해를 면책하고 있으며, 이는 치명적인 보장 공백을 초래한다"</em>고 경고합니다.
+            </p>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2025 ZOBIS. PI-사이버 듀얼 전략.</p>
+        </div>
+    </div>
+</body>
+</html>
+

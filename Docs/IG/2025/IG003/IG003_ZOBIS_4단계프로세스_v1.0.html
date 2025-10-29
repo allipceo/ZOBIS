@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IG003 - ZOBIS 4단계 시스템 영업 프로세스</title>
+    
+    <!--
+    ============================================
+    인포그래픽 #3: ZOBIS 4단계 시스템 영업 프로세스
+    ============================================
+    
+    목적:
+    - ZOBIS 시스템의 작동 원리와 자동화 효과를 시각적으로 명확히 전달
+    
+    핵심 메시지:
+    - ZOBIS는 4단계 파이프라인으로 영업 프로세스의 90% 이상을 자동화하여
+      FTE 3명으로 15,000명 회원을 관리할 수 있게 합니다
+    
+    데이터 출처:
+    - CI020 p.33 (Line 1120-1176)
+    
+    적용 위치:
+    - CI020 Section V (ZOBIS 시스템), Line 1176 직후
+    
+    버전 이력:
+    - v1.0 (2025-10-25): 초안 생성 (서대리)
+    
+    ============================================
+    -->
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../Assets/common.css">
+    
+    <style>
+        body {
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        
+        .process-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .stage {
+            flex: 1;
+            position: relative;
+            background: var(--gradient-primary);
+            border-radius: var(--radius-lg);
+            padding: 30px 20px;
+            color: var(--color-white);
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .stage:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .stage-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .stage-title {
+            font-size: var(--font-size-xl);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .stage-subtitle {
+            font-size: var(--font-size-sm);
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        
+        .automation-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .automation-100 {
+            background: var(--color-success);
+            border-color: var(--color-success);
+        }
+        
+        .automation-90 {
+            background: var(--color-warning);
+            border-color: var(--color-warning);
+        }
+        
+        .stage-details {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            text-align: left;
+            font-size: var(--font-size-sm);
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .stage:hover .stage-details {
+            opacity: 1;
+            max-height: 200px;
+        }
+        
+        .stage-details ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .stage-details li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .stage-details li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .arrow {
+            flex: 0 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: var(--color-bright-blue);
+        }
+        
+        .efficiency-comparison {
+            margin-top: 60px;
+            padding: 30px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: var(--radius-lg);
+            border-left: 5px solid var(--color-bright-blue);
+        }
+        
+        .efficiency-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            color: var(--color-deep-blue);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .efficiency-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+        
+        .efficiency-item {
+            text-align: center;
+            padding: 20px;
+            background: var(--color-white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .efficiency-label {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray-600);
+            margin-bottom: 8px;
+        }
+        
+        .efficiency-value {
+            font-size: var(--font-size-4xl);
+            font-weight: 700;
+            color: var(--color-deep-blue);
+        }
+        
+        .efficiency-value.highlight {
+            color: var(--color-success);
+        }
+        
+        /* 모바일 대응 */
+        @media (max-width: 768px) {
+            .process-flow {
+                flex-direction: column;
+            }
+            
+            .arrow {
+                transform: rotate(90deg);
+                flex: 0 0 30px;
+            }
+            
+            .efficiency-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .stage {
+                padding: 25px 15px;
+            }
+            
+            .stage-icon {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ZOBIS 4단계 시스템 영업 프로세스</h1>
+            <p>AI 기반 자동화로 영업 프로세스의 94%를 효율화하는 혁신적 파이프라인</p>
+        </div>
+        
+        <div class="process-flow">
+            <!-- Stage 1: Capture -->
+            <div class="stage">
+                <span class="stage-icon">📥</span>
+                <div class="stage-title">Stage 1</div>
+                <div class="stage-subtitle">Capture<br>(데이터 수집)</div>
+                <span class="automation-badge automation-100">자동화율 100%</span>
+                
+                <div class="stage-details">
+                    <ul>
+                        <li>협회 공시자료 자동 수집</li>
+                        <li>Google Drive API 연동</li>
+                        <li>웹 스크래핑 (뉴스/공지)</li>
+                        <li>Notion DB INBOX 자동 분류</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="arrow">→</div>
+            
+            <!-- Stage 2: Analyze -->
+            <div class="stage">
+                <span class="stage-icon">🧠</span>
+                <div class="stage-title">Stage 2</div>
+                <div class="stage-subtitle">Analyze<br>(AI 분석)</div>
+                <span class="automation-badge automation-100">자동화율 95%</span>
+                
+                <div class="stage-details">
+                    <ul>
+                        <li>LLM 기반 문서 자동 요약</li>
+                        <li>리스크 요소 추출</li>
+                        <li>사고 사례 패턴 매칭</li>
+                        <li>PIPA 규제 적용 판단</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="arrow">→</div>
+            
+            <!-- Stage 3: Quantify -->
+            <div class="stage">
+                <span class="stage-icon">📊</span>
+                <div class="stage-title">Stage 3</div>
+                <div class="stage-subtitle">Quantify<br>(R-Score 정량화)</div>
+                <span class="automation-badge automation-100">자동화율 100%</span>
+                
+                <div class="stage-details">
+                    <ul>
+                        <li>6개 카테고리 점수 계산</li>
+                        <li>가중치 적용 (0-100점)</li>
+                        <li>Pass A/B 상품 매칭</li>
+                        <li>추정 보험료 산출</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="arrow">→</div>
+            
+            <!-- Stage 4: Action -->
+            <div class="stage">
+                <span class="stage-icon">🚀</span>
+                <div class="stage-title">Stage 4</div>
+                <div class="stage-subtitle">Action<br>(자동 제안)</div>
+                <span class="automation-badge automation-90">자동화율 90%</span>
+                
+                <div class="stage-details">
+                    <ul>
+                        <li>맞춤형 위험 보고서 생성</li>
+                        <li>이메일/SMS 자동 발송</li>
+                        <li>우선순위 푸시 알림</li>
+                        <li>Follow-up 자동 설정</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 효율성 비교 -->
+        <div class="efficiency-comparison">
+            <div class="efficiency-title">프로세스 효율성 비교</div>
+            <div class="efficiency-grid">
+                <div class="efficiency-item">
+                    <div class="efficiency-label">전통적 수동 방식</div>
+                    <div class="efficiency-value">6시간/건</div>
+                    <p style="margin-top: 10px; color: var(--color-gray-600); font-size: 14px;">
+                        영업사원이 회원별로<br>수동으로 조사 및 제안서 작성
+                    </p>
+                </div>
+                
+                <div class="efficiency-item">
+                    <div class="efficiency-label">ZOBIS 자동화 방식</div>
+                    <div class="efficiency-value highlight">20분/건</div>
+                    <p style="margin-top: 10px; color: var(--color-gray-600); font-size: 14px;">
+                        AI가 자동 분석 및<br>템플릿 자동 생성
+                    </p>
+                </div>
+                
+                <div class="efficiency-item" style="grid-column: 1 / -1;">
+                    <div class="efficiency-label">시간 절감 효과</div>
+                    <div class="efficiency-value highlight">94%</div>
+                    <p style="margin-top: 10px; color: var(--color-gray-600); font-size: 14px;">
+                        <strong>평균 5시간 40분 절감</strong> - FTE 3명으로 15,000명 회원 관리 가능
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2025 ZOBIS. AI 레버리지 영업 시스템.</p>
+        </div>
+    </div>
+    
+    <script src="../../Assets/chart-config.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IG007 - ZOBIS 레버리지 효과</title>
+    
+    <!--
+    ============================================
+    인포그래픽 #7: ZOBIS 레버리지 효과: 전통 모델 vs. AI 모델
+    ============================================
+    
+    목적:
+    - 경제적 효과를 극대화하여 FTE 고정의 가치 시각화
+    
+    핵심 메시지:
+    - 전통 모델은 FTE와 매출이 함께 증가하지만,
+      ZOBIS 모델은 FTE 3명 고정으로 5년 누적 84억 원 인건비 절감
+    
+    데이터 출처:
+    - CI020 p.34 (Line 1227-1228)
+    
+    적용 위치:
+    - CI020 Section V (FTE 고정 레버리지), Line 1228 직후
+    
+    버전 이력:
+    - v1.0 (2025-10-25): 초안 생성 (서대리)
+    
+    ============================================
+    -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../Assets/common.css">
+    
+    <style>
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .model-card {
+            padding: 25px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .model-traditional {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border: 3px solid #ef4444;
+        }
+        
+        .model-zobis {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border: 3px solid #10b981;
+        }
+        
+        .model-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .model-title.traditional {
+            color: #991b1b;
+        }
+        
+        .model-title.zobis {
+            color: #065f46;
+        }
+        
+        .model-metric {
+            background: white;
+            padding: 15px;
+            border-radius: var(--radius-md);
+            margin: 10px 0;
+            text-align: center;
+        }
+        
+        .metric-label {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray-600);
+            margin-bottom: 5px;
+        }
+        
+        .metric-value {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+        }
+        
+        .metric-value.bad {
+            color: #dc2626;
+        }
+        
+        .metric-value.good {
+            color: #059669;
+        }
+        
+        .chart-container {
+            height: 500px;
+            margin: 40px 0;
+        }
+        
+        .savings-highlight {
+            background: var(--gradient-success);
+            color: white;
+            padding: 40px;
+            border-radius: var(--radius-xl);
+            text-align: center;
+            margin: 40px 0;
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .savings-icon {
+            font-size: 64px;
+            margin-bottom: 15px;
+        }
+        
+        .savings-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .savings-value {
+            font-size: 72px;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+        
+        .savings-description {
+            font-size: var(--font-size-lg);
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-container {
+                height: 350px;
+            }
+            
+            .savings-value {
+                font-size: 48px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ZOBIS 레버리지 효과</h1>
+            <p>전통 모델 vs. AI 자동화 모델의 경제적 비교</p>
+        </div>
+        
+        <!-- 모델 비교 카드 -->
+        <div class="comparison-grid">
+            <div class="model-card model-traditional">
+                <div class="model-title traditional">📊 전통 모델</div>
+                <p style="text-align: center; color: #7f1d1d; margin-bottom: 20px; font-size: 14px;">
+                    매출 증가 = 인력 증가 (선형 구조)
+                </p>
+                
+                <div class="model-metric">
+                    <div class="metric-label">Year 5 FTE</div>
+                    <div class="metric-value bad">45명</div>
+                </div>
+                
+                <div class="model-metric">
+                    <div class="metric-label">Year 5 매출</div>
+                    <div class="metric-value">15억 원</div>
+                </div>
+                
+                <div class="model-metric">
+                    <div class="metric-label">5년 누적 인건비</div>
+                    <div class="metric-value bad">103억 원</div>
+                </div>
+                
+                <div class="model-metric">
+                    <div class="metric-label">1인당 매출 (Year 5)</div>
+                    <div class="metric-value bad">3,333만 원</div>
+                </div>
+            </div>
+            
+            <div class="model-card model-zobis">
+                <div class="model-title zobis">🚀 ZOBIS 모델</div>
+                <p style="text-align: center; color: #064e3b; margin-bottom: 20px; font-size: 14px;">
+                    매출 비선형 성장 (FTE 고정)
+                </p>
+                
+                <div class="model-metric">
+                    <div class="metric-label">Year 5 FTE</div>
+                    <div class="metric-value good">3명</div>
+                </div>
+                
+                <div class="model-metric">
+                    <div class="metric-label">Year 5 매출</div>
+                    <div class="metric-value">15억 원</div>
+                </div>
+                
+                <div class="model-metric">
+                    <div class="metric-label">5년 누적 인건비</div>
+                    <div class="metric-value good">9억 원</div>
+                </div>
+                
+                <div class="model-metric">
+                    <div class="metric-label">1인당 매출 (Year 5)</div>
+                    <div class="metric-value good">5억 원</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 차트 -->
+        <div class="chart-section">
+            <h2 class="section-title">FTE vs 매출 비교 (5개년)</h2>
+            <p class="section-subtitle">막대: FTE 인원 | 선: 연간 매출</p>
+            <div class="chart-container">
+                <canvas id="leverageChart"></canvas>
+            </div>
+        </div>
+        
+        <!-- 절감 효과 강조 -->
+        <div class="savings-highlight">
+            <div class="savings-icon">💰</div>
+            <div class="savings-title">5년 누적 인건비 절감</div>
+            <div class="savings-value">84억 원</div>
+            <div class="savings-description">
+                전통 모델 대비 <strong>81% 인건비 절감</strong><br>
+                평균 42명 인력 절감 효과 (Year 2-5 평균)<br><br>
+                <strong>투자 회수: Year 2</strong> (초기 투자 3억 대비 28배 효과)
+            </div>
+        </div>
+        
+        <div style="margin-top: 40px; padding: 25px; background: #fffbeb; border-left: 5px solid #f59e0b; border-radius: 8px;">
+            <h3 style="color: #92400e; margin-bottom: 10px; font-size: 18px; font-weight: 700;">💡 핵심 인사이트</h3>
+            <p style="color: #78350f; font-size: 15px; line-height: 1.7;">
+                ZOBIS 시스템은 영업 프로세스의 94%를 자동화하여 <strong>FTE를 Year 2부터 3명으로 고정</strong>합니다. 
+                전통 모델은 매출 증가에 따라 인력을 비례적으로 늘려야 하지만, ZOBIS 모델은 시스템 속도에 비례한 
+                매출 성장으로 <strong>Year 5에 1인당 5억 원 매출</strong>을 달성합니다. 이는 전통 모델 대비 <strong>15배 생산성</strong>입니다.
+            </p>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2025 ZOBIS. AI 레버리지 경제 모델.</p>
+        </div>
+    </div>
+    
+    <script src="../../Assets/chart-config.js"></script>
+    <script>
+        const ctx = document.getElementById('leverageChart').getContext('2d');
+        
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [
+                    // 전통 모델 - FTE (막대)
+                    {
+                        type: 'bar',
+                        label: '전통 모델 FTE',
+                        data: [3, 15, 24, 30, 45],
+                        backgroundColor: 'rgba(239, 68, 68, 0.7)',
+                        borderColor: '#dc2626',
+                        borderWidth: 2,
+                        yAxisID: 'y-fte',
+                        order: 2
+                    },
+                    // ZOBIS 모델 - FTE (막대)
+                    {
+                        type: 'bar',
+                        label: 'ZOBIS 모델 FTE',
+                        data: [3, 3, 3, 3, 3],
+                        backgroundColor: 'rgba(16, 185, 129, 0.7)',
+                        borderColor: '#059669',
+                        borderWidth: 2,
+                        yAxisID: 'y-fte',
+                        order: 2
+                    },
+                    // 전통 모델 - 매출 (선)
+                    {
+                        type: 'line',
+                        label: '전통 모델 매출',
+                        data: [1, 5, 8, 10, 15],
+                        borderColor: '#ef4444',
+                        backgroundColor: 'transparent',
+                        borderWidth: 3,
+                        borderDash: [10, 5],
+                        tension: 0.4,
+                        yAxisID: 'y-revenue',
+                        pointRadius: 6,
+                        pointBackgroundColor: '#ef4444',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        order: 1
+                    },
+                    // ZOBIS 모델 - 매출 (선)
+                    {
+                        type: 'line',
+                        label: 'ZOBIS 모델 매출',
+                        data: [1, 5, 8, 10, 15],
+                        borderColor: '#10b981',
+                        backgroundColor: 'transparent',
+                        borderWidth: 4,
+                        tension: 0.4,
+                        yAxisID: 'y-revenue',
+                        pointRadius: 8,
+                        pointBackgroundColor: '#10b981',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 3,
+                        order: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            usePointStyle: true,
+                            padding: 15,
+                            font: {
+                                size: 13,
+                                weight: '600',
+                                family: "'Noto Sans KR', sans-serif"
+                            }
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.85)',
+                        padding: 12,
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.dataset.yAxisID === 'y-fte') {
+                                    label += context.parsed.y + '명';
+                                } else {
+                                    label += context.parsed.y + '억 원';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    'y-fte': {
+                        type: 'linear',
+                        position: 'left',
+                        title: {
+                            display: true,
+                            text: 'FTE (명)',
+                            font: {
+                                size: 14,
+                                weight: '600'
+                            },
+                            color: '#dc2626'
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return value + '명';
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    'y-revenue': {
+                        type: 'linear',
+                        position: 'right',
+                        title: {
+                            display: true,
+                            text: '매출 (억 원)',
+                            font: {
+                                size: 14,
+                                weight: '600'
+                            },
+                            color: '#059669'
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return value + '억';
+                            }
+                        },
+                        grid: {
+                            drawOnChartArea: false
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            font: {
+                                size: 13,
+                                weight: '500'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+

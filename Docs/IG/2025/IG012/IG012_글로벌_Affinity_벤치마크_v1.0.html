@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IG012 - 글로벌 Affinity 성공 사례</title>
+    
+    <!--
+    ============================================
+    인포그래픽 #12: 글로벌 Affinity 모델 성공 사례 벤치마크
+    ============================================
+    
+    목적:
+    - 글로벌 선례로 록톤 한국 전략의 실현 가능성 입증
+    
+    핵심 메시지:
+    - ABA와 BMA의 성공 사례는 Affinity 모델의 유효성을 입증하며
+      록톤 코리아의 목표 침투율 5-7%는 보수적 수준입니다
+    
+    데이터 출처:
+    - CI020 p.36 (Line 1322-1323)
+    
+    적용 위치:
+    - CI020 Section VI (벤치마킹), Line 1323 직후
+    
+    버전 이력:
+    - v1.0 (2025-10-25): 초안 생성 (서대리)
+    
+    ============================================
+    -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../Assets/common.css">
+    
+    <style>
+        .benchmark-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .benchmark-card {
+            background: white;
+            padding: 30px 25px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            border-top: 6px solid;
+            transition: all 0.3s ease;
+        }
+        
+        .benchmark-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .benchmark-card.aba {
+            border-color: #dc2626;
+        }
+        
+        .benchmark-card.bma {
+            border-color: #2563eb;
+        }
+        
+        .benchmark-card.lockton {
+            border-color: #059669;
+        }
+        
+        .card-flag {
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .card-title {
+            font-size: var(--font-size-xl);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        
+        .card-subtitle {
+            text-align: center;
+            color: var(--color-gray-600);
+            font-size: var(--font-size-sm);
+            margin-bottom: 20px;
+        }
+        
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--color-gray-200);
+        }
+        
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+        
+        .metric-label {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray-600);
+        }
+        
+        .metric-value {
+            font-size: var(--font-size-lg);
+            font-weight: 700;
+        }
+        
+        .metric-value.aba {
+            color: #dc2626;
+        }
+        
+        .metric-value.bma {
+            color: #2563eb;
+        }
+        
+        .metric-value.lockton {
+            color: #059669;
+        }
+        
+        .chart-section {
+            margin: 40px 0;
+        }
+        
+        .chart-container {
+            height: 400px;
+            background: white;
+            padding: 30px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .comparison-table {
+            width: 100%;
+            margin-top: 40px;
+            border-collapse: collapse;
+            background: white;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .comparison-table thead {
+            background: var(--gradient-primary);
+            color: white;
+        }
+        
+        .comparison-table th {
+            padding: 15px;
+            font-weight: 700;
+            text-align: center;
+        }
+        
+        .comparison-table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid var(--color-gray-200);
+        }
+        
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .comparison-table tbody tr:hover {
+            background: var(--color-gray-50);
+        }
+        
+        .comparison-table .label-col {
+            font-weight: 600;
+            text-align: left;
+            color: var(--color-gray-700);
+        }
+        
+        .highlight-box {
+            display: inline-block;
+            background: var(--gradient-success);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+        
+        @media (max-width: 768px) {
+            .benchmark-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>글로벌 Affinity 모델 성공 사례</h1>
+            <p>미국 ABA · 영국 BMA vs. 록톤 코리아 전략</p>
+        </div>
+        
+        <!-- 벤치마크 카드 -->
+        <div class="benchmark-grid">
+            <!-- ABA (미국 변호사협회) -->
+            <div class="benchmark-card aba">
+                <div class="card-flag">🇺🇸</div>
+                <div class="card-title">ABA</div>
+                <div class="card-subtitle">American Bar Association<br>미국 변호사협회</div>
+                
+                <div class="metric-row">
+                    <div class="metric-label">총 회원</div>
+                    <div class="metric-value aba">400,000명</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-label">보험 가입자</div>
+                    <div class="metric-value aba">48,000명</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-label">침투율</div>
+                    <div class="metric-value aba">12%</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-label">CAC 절감</div>
+                    <div class="metric-value aba">1/8</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-label">연간 갱신율</div>
+                    <div class="metric-value aba">89%</div>
+                </div>
+            </div>
+            
+            <!-- BMA (영국 의사협회) -->
+            <div class="benchmark-card bma">
+                <div class="card-flag">🇬🇧</div>
+                <div class="card-title">BMA</div>
+                <div class="card-subtitle">British Medical Association<br>영국 의사협회</div>
+                
+                <div class="metric-row">
+                    <div class="metric-label">총 회원</div>
+                    <div class="metric-value bma">160,000명</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-label">보험 가입자</div>
+                    <div class="metric-value bma">12,800명</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-label">침투율</div>
+                    <div class="metric-value bma">8%</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-label">만족도</div>
+                    <div class="metric-value bma">93%</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-label">연간 갱신율</div>
+                    <div class="metric-value bma">91%</div>
+                </div>
+            </div>
+            
+            <!-- 록톤 코리아 -->
+            <div class="benchmark-card lockton">
+                <div class="card-flag">🇰🇷</div>
+                <div class="card-title">Lockton Korea</div>
+                <div class="card-subtitle">록톤 코리아<br>한국 전문직 협회</div>
+                
+                <div class="metric-row">
+                    <div class="metric-label">총 타겟</div>
+                    <div class="metric-value lockton">300,000명</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-label">목표 가입자 (Year 5)</div>
+                    <div class="metric-value lockton">15,000명</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-label">목표 침투율</div>
+                    <div class="metric-value lockton">5%</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-label">CAC 목표</div>
+                    <div class="metric-value lockton">1/10</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-label">목표 갱신율</div>
+                    <div class="metric-value lockton">85%</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 침투율 비교 차트 -->
+        <div class="chart-section">
+            <h2 class="section-title">침투율 비교 (보수적 목표 설정)</h2>
+            <p class="section-subtitle">록톤 코리아의 목표 5%는 글로벌 평균 대비 보수적 수준</p>
+            <div class="chart-container">
+                <canvas id="penetrationChart"></canvas>
+            </div>
+        </div>
+        
+        <!-- 비교 테이블 -->
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>지표</th>
+                    <th>ABA (미국)</th>
+                    <th>BMA (영국)</th>
+                    <th>Lockton Korea</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="label-col">협회 유형</td>
+                    <td>변호사협회</td>
+                    <td>의사협회</td>
+                    <td>복합 (세무사·의사·변호사 등)</td>
+                </tr>
+                <tr>
+                    <td class="label-col">주요 상품</td>
+                    <td>PI + Cyber</td>
+                    <td>Medical Malpractice + Cyber</td>
+                    <td>PI-Cyber 듀얼</td>
+                </tr>
+                <tr>
+                    <td class="label-col">침투율</td>
+                    <td><strong>12%</strong></td>
+                    <td><strong>8%</strong></td>
+                    <td><span class="highlight-box">5% (보수적)</span></td>
+                </tr>
+                <tr>
+                    <td class="label-col">CAC 절감</td>
+                    <td>1/8</td>
+                    <td>정보 없음</td>
+                    <td>1/10</td>
+                </tr>
+                <tr>
+                    <td class="label-col">갱신율</td>
+                    <td>89%</td>
+                    <td>91%</td>
+                    <td>85% (목표)</td>
+                </tr>
+                <tr>
+                    <td class="label-col">성공 요인</td>
+                    <td>협회 공식 추천<br>단체 할인 10%</td>
+                    <td>협회 멤버십 혜택<br>맞춤형 보장</td>
+                    <td>ZOBIS 자동화<br>저비용 고효율</td>
+                </tr>
+                <tr>
+                    <td class="label-col">운영 기간</td>
+                    <td>15년+</td>
+                    <td>20년+</td>
+                    <td>Year 1 착수</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div style="margin-top: 40px; padding: 25px; background: #d1fae5; border-left: 5px solid #10b981; border-radius: 8px;">
+            <h3 style="color: #065f46; margin-bottom: 10px; font-size: 18px; font-weight: 700;">💡 핵심 인사이트</h3>
+            <p style="color: #064e3b; font-size: 15px; line-height: 1.7;">
+                <strong>ABA(12%)와 BMA(8%)의 성공</strong>은 Affinity 모델의 유효성을 입증합니다. 
+                록톤 코리아의 <strong>목표 침투율 5%는 글로벌 평균 대비 보수적</strong> 수준으로, 
+                ZOBIS 시스템의 자동화 레버리지를 활용하면 <strong>Year 3 이후 7-10% 달성</strong>도 가능합니다. 
+                특히 CAC 1/10 절감 전략은 ABA 대비 <strong>20% 더 효율적</strong>입니다.
+            </p>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2025 ZOBIS. 글로벌 Affinity 벤치마크.</p>
+        </div>
+    </div>
+    
+    <script src="../../Assets/chart-config.js"></script>
+    <script>
+        const ctx = document.getElementById('penetrationChart').getContext('2d');
+        
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['ABA\n(미국 변호사)', 'BMA\n(영국 의사)', '글로벌 평균', 'Lockton Korea\n(목표)', 'Lockton Korea\n(Year 3 확장)'],
+                datasets: [{
+                    label: '침투율 (%)',
+                    data: [12, 8, 10, 5, 7],
+                    backgroundColor: [
+                        'rgba(220, 38, 38, 0.7)',
+                        'rgba(37, 99, 235, 0.7)',
+                        'rgba(156, 163, 175, 0.7)',
+                        'rgba(5, 150, 105, 0.7)',
+                        'rgba(16, 185, 129, 0.9)'
+                    ],
+                    borderColor: [
+                        '#dc2626',
+                        '#2563eb',
+                        '#6b7280',
+                        '#059669',
+                        '#10b981'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.85)',
+                        callbacks: {
+                            label: function(context) {
+                                return '침투율: ' + context.parsed.y + '%';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 15,
+                        title: {
+                            display: true,
+                            text: '침투율 (%)',
+                            font: {
+                                size: 14,
+                                weight: '600'
+                            }
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            font: {
+                                size: 12,
+                                weight: '500'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+
