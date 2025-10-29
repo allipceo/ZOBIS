@@ -1,0 +1,2818 @@
+import React from 'react';
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Label } from 'recharts';
+
+const FTELeverageChart = () => {
+  const data = [
+    { year: 'Year 1', zobis_revenue: 1, zobis_fte: 3, traditional_revenue: 1, traditional_fte: 3 },
+    { year: 'Year 2', zobis_revenue: 5, zobis_fte: 3, traditional_revenue: 5, traditional_fte: 15 },
+    { year: 'Year 3', zobis_revenue: 8, zobis_fte: 3, traditional_revenue: 8, traditional_fte: 24 },
+    { year: 'Year 4', zobis_revenue: 10, zobis_fte: 3, traditional_revenue: 10, traditional_fte: 30 },
+    { year: 'Year 5', zobis_revenue: 15, zobis_fte: 3, traditional_revenue: 15, traditional_fte: 45 },
+  ];
+
+  return (
+    <div className="w-full h-full bg-white p-8">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">
+          FIG 1-1: FTE vs 매출 레버리지 차트
+        </h2>
+        <p className="text-sm text-gray-600">
+          ZOBIS 모델의 비선형 성장 vs 전통 모델의 선형 증가 비교
+        </p>
+      </div>
+
+      {/* 매출 차트 */}
+      <div className="mb-8">
+        <h3 className="text-lg font-semibold text-gray-700 mb-3">매출 성장 비교 (억원)</h3>
+        <ResponsiveContainer width="100%" height={250}>
+          <LineChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+            <XAxis dataKey="year" />
+            <YAxis>
+              <Label value="매출 (억원)" angle={-90} position="insideLeft" style={{ textAnchor: 'middle' }} />
+            </YAxis>
+            <Tooltip 
+              formatter={(value) => `${value}억원`}
+              contentStyle={{ backgroundColor: '#fff', border: '1px solid #ccc' }}
+            />
+            <Legend />
+            <Line 
+              type="monotone" 
+              dataKey="zobis_revenue" 
+              stroke="#0066CC" 
+              strokeWidth={3}
+              name="ZOBIS 모델 매출"
+              dot={{ r: 6, fill: '#0066CC' }}
+            />
+            <Line 
+              type="monotone" 
+              dataKey="traditional_revenue" 
+              stroke="#FF6B6B" 
+              strokeWidth={2}
+              strokeDasharray="5 5"
+              name="전통 모델 매출"
+              dot={{ r: 4, fill: '#FF6B6B' }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+
+      {/* FTE 차트 */}
+      <div className="mb-8">
+        <h3 className="text-lg font-semibold text-gray-700 mb-3">투입 인력 비교 (FTE)</h3>
+        <ResponsiveContainer width="100%" height={250}>
+          <BarChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+            <XAxis dataKey="year" />
+            <YAxis>
+              <Label value="인력 (명)" angle={-90} position="insideLeft" style={{ textAnchor: 'middle' }} />
+            </YAxis>
+            <Tooltip 
+              formatter={(value) => `${value}명`}
+              contentStyle={{ backgroundColor: '#fff', border: '1px solid #ccc' }}
+            />
+            <Legend />
+            <Bar dataKey="zobis_fte" fill="#0066CC" name="ZOBIS 모델 인력" />
+            <Bar dataKey="traditional_fte" fill="#FF6B6B" name="전통 모델 인력" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+
+      {/* 핵심 지표 */}
+      <div className="grid grid-cols-3 gap-4 mt-6">
+        <div className="bg-blue-50 p-4 rounded-lg border-2 border-blue-200">
+          <div className="text-sm text-blue-600 font-semibold mb-1">ZOBIS 모델</div>
+          <div className="text-2xl font-bold text-blue-800">FTE 3명 고정</div>
+          <div className="text-xs text-blue-600 mt-1">매출 1→15억 (15배)</div>
+        </div>
+        <div className="bg-red-50 p-4 rounded-lg border-2 border-red-200">
+          <div className="text-sm text-red-600 font-semibold mb-1">전통 모델</div>
+          <div className="text-2xl font-bold text-red-800">FTE 3→45명</div>
+          <div className="text-xs text-red-600 mt-1">매출 1→15억 (선형)</div>
+        </div>
+        <div className="bg-green-50 p-4 rounded-lg border-2 border-green-200">
+          <div className="text-sm text-green-600 font-semibold mb-1">인건비 절감</div>
+          <div className="text-2xl font-bold text-green-800">KRW 68억</div>
+          <div className="text-xs text-green-600 mt-1">5년 누적 (ROI 6,700%)</div>
+        </div>
+      </div>
+
+      {/* 인사이트 */}
+      <div className="mt-6 p-4 bg-gray-50 rounded-lg border-l-4 border-blue-500">
+        <div className="flex items-start">
+          <div className="text-blue-500 mr-3 text-xl">💡</div>
+          <div>
+            <div className="font-semibold text-gray-800 mb-1">핵심 인사이트</div>
+            <div className="text-sm text-gray-600">
+              ZOBIS AI 레버리지로 <span className="font-bold text-blue-600">인력 증가 없이</span> 매출만 15배 성장. 
+              전통 모델 대비 <span className="font-bold text-blue-600">KRW 68억 인건비 절감</span> 달성.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default FTELeverageChart;
+
+
+import React from 'react';
+
+const CausationTrapDiagram = () => {
+  return (
+    <div className="w-full h-full bg-white p-8">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">
+          FIG 3-1: The Causation Trap (원인 기반 면책의 함정)
+        </h2>
+        <p className="text-sm text-gray-600">
+          PI 보험과 사이버 보험의 이중 면책으로 인한 보장 공백 구조
+        </p>
+      </div>
+
+      <div className="flex flex-col items-center space-y-6">
+        {/* 사이버 사고 시작 */}
+        <div className="w-full max-w-md">
+          <div className="bg-red-500 text-white p-4 rounded-lg text-center shadow-lg">
+            <div className="text-sm font-semibold mb-1">⚠️ 사고 발생</div>
+            <div className="text-xl font-bold">사이버 사고</div>
+            <div className="text-sm mt-1">(예: 랜섬웨어 감염)</div>
+          </div>
+        </div>
+
+        {/* 화살표 분기 */}
+        <div className="flex items-center justify-center">
+          <div className="text-gray-400 text-2xl">↓</div>
+        </div>
+
+        {/* 두 가지 보험 청구 경로 */}
+        <div className="grid grid-cols-2 gap-8 w-full">
+          {/* 좌측: PI 보험 경로 */}
+          <div className="flex flex-col space-y-4">
+            <div className="bg-blue-100 border-2 border-blue-300 p-4 rounded-lg">
+              <div className="text-sm font-semibold text-blue-600 mb-1">경로 1</div>
+              <div className="font-bold text-blue-800">PI 보험 청구</div>
+              <div className="text-sm text-gray-600 mt-2">
+                "업무 과실로 고객 손해 발생"
+              </div>
+            </div>
+
+            <div className="flex justify-center">
+              <div className="text-gray-400 text-xl">↓</div>
+            </div>
+
+            <div className="bg-gray-100 border-2 border-gray-300 p-4 rounded-lg">
+              <div className="text-sm font-semibold text-gray-600 mb-1">보험사 판단</div>
+              <div className="font-bold text-gray-800">원인 = 사이버 행위</div>
+              <div className="text-xs text-gray-600 mt-2">
+                "랜섬웨어로 인한 손해"
+              </div>
+            </div>
+
+            <div className="flex justify-center">
+              <div className="text-gray-400 text-xl">↓</div>
+            </div>
+
+            <div className="bg-red-100 border-2 border-red-400 p-4 rounded-lg">
+              <div className="text-3xl text-center mb-2">❌</div>
+              <div className="font-bold text-red-800 text-center">면책</div>
+              <div className="text-sm text-red-600 text-center mt-1">
+                "사이버 원인 면책 조항"
+              </div>
+            </div>
+          </div>
+
+          {/* 우측: 사이버 보험 경로 */}
+          <div className="flex flex-col space-y-4">
+            <div className="bg-purple-100 border-2 border-purple-300 p-4 rounded-lg">
+              <div className="text-sm font-semibold text-purple-600 mb-1">경로 2</div>
+              <div className="font-bold text-purple-800">사이버보험 청구</div>
+              <div className="text-sm text-gray-600 mt-2">
+                "시스템 복구 및 BI 손실"
+              </div>
+            </div>
+
+            <div className="flex justify-center">
+              <div className="text-gray-400 text-xl">↓</div>
+            </div>
+
+            <div className="bg-gray-100 border-2 border-gray-300 p-4 rounded-lg">
+              <div className="text-sm font-semibold text-gray-600 mb-1">보험사 판단</div>
+              <div className="font-bold text-gray-800">결과 = PI 손해</div>
+              <div className="text-xs text-gray-600 mt-2">
+                "전문가 업무 과실 결과"
+              </div>
+            </div>
+
+            <div className="flex justify-center">
+              <div className="text-gray-400 text-xl">↓</div>
+            </div>
+
+            <div className="bg-red-100 border-2 border-red-400 p-4 rounded-lg">
+              <div className="text-3xl text-center mb-2">❌</div>
+              <div className="font-bold text-red-800 text-center">면책</div>
+              <div className="text-sm text-red-600 text-center mt-1">
+                "업무 관련 손해 제외"
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 최종 결과 */}
+        <div className="flex items-center justify-center mt-4">
+          <div className="text-gray-400 text-2xl">↓</div>
+        </div>
+
+        <div className="w-full max-w-md">
+          <div className="bg-orange-500 text-white p-6 rounded-lg text-center shadow-lg">
+            <div className="text-3xl mb-2">⚠️</div>
+            <div className="text-xl font-bold mb-2">보장 공백 (Coverage Gap)</div>
+            <div className="text-sm">
+              어느 보험에서도 보상받지 못함
+            </div>
+          </div>
+        </div>
+
+        {/* 솔루션 */}
+        <div className="w-full mt-6 p-6 bg-green-50 rounded-lg border-2 border-green-300">
+          <div className="flex items-start">
+            <div className="text-green-600 mr-3 text-2xl">✅</div>
+            <div className="flex-1">
+              <div className="font-bold text-green-800 text-lg mb-2">록톤 듀얼 상품 솔루션</div>
+              <div className="text-sm text-gray-700">
+                PI-사이버 통합 보장으로 <span className="font-bold text-green-600">원인과 결과의 전체 연쇄 과정</span>을 
+                단일 보험으로 담보하여 <span className="font-bold text-green-600">보장 공백 완전 제거</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 실제 사례 */}
+        <div className="w-full mt-4 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+          <div className="text-sm font-semibold text-blue-800 mb-2">💼 실제 사례</div>
+          <div className="text-xs text-gray-700">
+            영국 법원 판례 (2021): 회계사무소 랜섬웨어 → 세금 신고 지연 → PI 보험사 "원인이 사이버"로 면책 승소
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CausationTrapDiagram;
+
+import React from 'react';
+
+const AssociationHeatmap = () => {
+  const associations = [
+    { name: '대한의사협회 (KMA)', members: '141,899명', score: 95, phase: 'Phase 2', priority: 'high' },
+    { name: '대한병원협회', members: '3,500병원', score: 94, phase: 'Phase 2', priority: 'high' },
+    { name: '한국공인회계사회 (KICPA)', members: '18,000명', score: 85, phase: 'Phase 2', priority: 'medium' },
+    { name: '대한치과의사협회', members: '~수만명', score: 88, phase: 'Phase 2', priority: 'medium' },
+    { name: '대한변호사협회', members: '~40,000명', score: 86, phase: 'Phase 2', priority: 'medium' },
+    { name: '대한약사회', members: '~수만명', score: 80, phase: 'Phase 2', priority: 'medium' },
+    { name: '한국세무사회 (KSA)', members: '17,000명', score: 82, phase: 'Phase 1 ★', priority: 'pilot' },
+    { name: '한국관세사회 (KCA)', members: '2,000명', score: 75, phase: 'Phase 1 ★', priority: 'pilot' },
+    { name: '한국핀테크산업협회', members: '-', score: 83, phase: 'Phase 2', priority: 'medium' },
+    { name: '한국VAN사업자협회', members: '-', score: 82, phase: 'Phase 2', priority: 'medium' },
+  ];
+
+  const getScoreColor = (score) => {
+    if (score >= 90) return 'bg-red-500';
+    if (score >= 80) return 'bg-orange-400';
+    if (score >= 70) return 'bg-yellow-400';
+    return 'bg-green-400';
+  };
+
+  const getScoreBg = (score) => {
+    if (score >= 90) return 'bg-red-50';
+    if (score >= 80) return 'bg-orange-50';
+    if (score >= 70) return 'bg-yellow-50';
+    return 'bg-green-50';
+  };
+
+  const getPriorityBadge = (priority) => {
+    if (priority === 'pilot') return 'bg-purple-500 text-white';
+    if (priority === 'high') return 'bg-red-500 text-white';
+    if (priority === 'medium') return 'bg-orange-500 text-white';
+    return 'bg-gray-400 text-white';
+  };
+
+  return (
+    <div className="w-full h-full bg-white p-8">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">
+          FIG 2-1: 협회별 사이버 적합도 히트맵
+        </h2>
+        <p className="text-sm text-gray-600">
+          상위 10개 협회의 사이버 보험 적합성 평가 (8개 지표 종합)
+        </p>
+      </div>
+
+      {/* 범례 */}
+      <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+        <div className="flex items-center justify-between">
+          <div className="text-sm font-semibold text-gray-700">적합성 점수 범례:</div>
+          <div className="flex gap-4">
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-red-500 rounded"></div>
+              <span className="text-xs">90-100점 (최고)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-orange-400 rounded"></div>
+              <span className="text-xs">80-89점 (높음)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-yellow-400 rounded"></div>
+              <span className="text-xs">70-79점 (중간)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 협회 테이블 */}
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse">
+          <thead>
+            <tr className="bg-blue-600 text-white">
+              <th className="p-3 text-left text-sm font-semibold">순위</th>
+              <th className="p-3 text-left text-sm font-semibold">협회명</th>
+              <th className="p-3 text-center text-sm font-semibold">회원수</th>
+              <th className="p-3 text-center text-sm font-semibold">적합성 점수</th>
+              <th className="p-3 text-center text-sm font-semibold">시각화</th>
+              <th className="p-3 text-center text-sm font-semibold">실행 단계</th>
+            </tr>
+          </thead>
+          <tbody>
+            {associations.map((assoc, idx) => (
+              <tr 
+                key={idx} 
+                className={`border-b ${getScoreBg(assoc.score)} hover:bg-opacity-70 transition-colors`}
+              >
+                <td className="p-3 text-center font-bold text-gray-700">
+                  {idx + 1}
+                </td>
+                <td className="p-3">
+                  <div className="font-semibold text-gray-800">{assoc.name}</div>
+                </td>
+                <td className="p-3 text-center text-sm text-gray-600">
+                  {assoc.members}
+                </td>
+                <td className="p-3 text-center">
+                  <span className="inline-block px-3 py-1 bg-white rounded-full font-bold text-lg">
+                    {assoc.score}점
+                  </span>
+                </td>
+                <td className="p-3">
+                  <div className="flex items-center justify-center">
+                    <div className="w-full bg-gray-200 rounded-full h-6 max-w-xs">
+                      <div 
+                        className={`${getScoreColor(assoc.score)} h-6 rounded-full flex items-center justify-end pr-2`}
+                        style={{ width: `${assoc.score}%` }}
+                      >
+                        <span className="text-xs text-white font-bold">{assoc.score}%</span>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td className="p-3 text-center">
+                  <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${getPriorityBadge(assoc.priority)}`}>
+                    {assoc.phase}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* 평가 기준 */}
+      <div className="mt-6 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+        <div className="font-semibold text-blue-800 mb-2">📊 평가 기준 (8개 지표)</div>
+        <div className="grid grid-cols-2 gap-3 text-sm text-gray-700">
+          <div>• 사이버 노출도 (20%)</div>
+          <div>• 사고 빈도 (15%)</div>
+          <div>• 회원수 (15%)</div>
+          <div>• 영향력 (15%)</div>
+          <div>• 보험부담력 (10%)</div>
+          <div>• 보호인프라 낮음 (10%)</div>
+          <div>• 규제압력 (10%)</div>
+          <div>• 실행가능성 (5%)</div>
+        </div>
+      </div>
+
+      {/* 핵심 인사이트 */}
+      <div className="mt-4 grid grid-cols-2 gap-4">
+        <div className="p-4 bg-purple-50 rounded-lg border-2 border-purple-300">
+          <div className="flex items-center mb-2">
+            <span className="text-2xl mr-2">★</span>
+            <span className="font-bold text-purple-800">Year 1 파일럿 대상</span>
+          </div>
+          <div className="text-sm text-gray-700">
+            KSA + KCA (총 19,000명)<br/>
+            목표: 1,000명 가입 (5-7.5% 침투율)
+          </div>
+        </div>
+        <div className="p-4 bg-green-50 rounded-lg border-2 border-green-300">
+          <div className="flex items-center mb-2">
+            <span className="text-2xl mr-2">🎯</span>
+            <span className="font-bold text-green-800">전체 시장 잠재력</span>
+          </div>
+          <div className="text-sm text-gray-700">
+            상위 10개 협회 약 30만명<br/>
+            잠재 시장: KRW 400억원+
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AssociationHeatmap;
+
+import React from 'react';
+
+const ZOBISProcessDiagram = () => {
+  const stages = [
+    {
+      stage: 'Stage 1',
+      name: 'Capture',
+      nameKr: '데이터 수집',
+      icon: '🔍',
+      automation: '100%',
+      color: 'blue',
+      activities: [
+        '협회 공시자료',
+        'Google Drive',
+        '웹 스크래핑',
+        '30개 조사표'
+      ],
+      output: 'Notion INBOX'
+    },
+    {
+      stage: 'Stage 2',
+      name: 'Analyze',
+      nameKr: 'AI 분석',
+      icon: '🤖',
+      automation: '95%',
+      color: 'purple',
+      activities: [
+        'LLM 문서 요약',
+        '리스크 추출',
+        '업종별 패턴 매칭',
+        '감성 분석'
+      ],
+      output: 'JSON 구조화'
+    },
+    {
+      stage: 'Stage 3',
+      name: 'Quantify',
+      nameKr: 'R-Score화',
+      icon: '📊',
+      automation: '100%',
+      color: 'green',
+      activities: [
+        '6개 카테고리 점수',
+        '가중치 적용',
+        'Pass A/B 판정',
+        '상품 매칭'
+      ],
+      output: 'R-Score 0-100'
+    },
+    {
+      stage: 'Stage 4',
+      name: 'Action',
+      nameKr: '자동 실행',
+      icon: '🚀',
+      automation: '90%',
+      color: 'orange',
+      activities: [
+        '위험보고서 생성',
+        '이메일/SMS 발송',
+        'Follow-up 스케줄',
+        'AI 전화 통화'
+      ],
+      output: '고객 접점'
+    }
+  ];
+
+  const getColorClasses = (color) => {
+    const colors = {
+      blue: { bg: 'bg-blue-500', light: 'bg-blue-50', border: 'border-blue-300', text: 'text-blue-600' },
+      purple: { bg: 'bg-purple-500', light: 'bg-purple-50', border: 'border-purple-300', text: 'text-purple-600' },
+      green: { bg: 'bg-green-500', light: 'bg-green-50', border: 'border-green-300', text: 'text-green-600' },
+      orange: { bg: 'bg-orange-500', light: 'bg-orange-50', border: 'border-orange-300', text: 'text-orange-600' }
+    };
+    return colors[color];
+  };
+
+  return (
+    <div className="w-full h-full bg-white p-8">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">
+          FIG 4-2: ZOBIS 4단계 시스템 프로세스
+        </h2>
+        <p className="text-sm text-gray-600">
+          데이터 수집부터 고객 접점까지 AI 기반 완전 자동화 파이프라인
+        </p>
+      </div>
+
+      {/* 프로세스 플로우 */}
+      <div className="grid grid-cols-4 gap-4 mb-8">
+        {stages.map((stage, idx) => {
+          const colors = getColorClasses(stage.color);
+          return (
+            <div key={idx} className="relative">
+              {/* 화살표 */}
+              {idx < stages.length - 1 && (
+                <div className="absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 z-10">
+                  <div className="text-gray-400 text-2xl">→</div>
+                </div>
+              )}
+              
+              {/* 스테이지 카드 */}
+              <div className={`${colors.light} border-2 ${colors.border} rounded-lg p-4 h-full`}>
+                {/* 헤더 */}
+                <div className={`${colors.bg} text-white rounded-md p-3 mb-3 text-center`}>
+                  <div className="text-3xl mb-1">{stage.icon}</div>
+                  <div className="text-xs font-semibold">{stage.stage}</div>
+                  <div className="text-sm font-bold">{stage.name}</div>
+                  <div className="text-xs">{stage.nameKr}</div>
+                </div>
+
+                {/* 자동화율 */}
+                <div className="mb-3 text-center">
+                  <div className="text-xs text-gray-600 mb-1">자동화율</div>
+                  <div className={`${colors.text} font-bold text-xl`}>{stage.automation}</div>
+                </div>
+
+                {/* 활동 목록 */}
+                <div className="space-y-2 mb-3">
+                  {stage.activities.map((activity, i) => (
+                    <div key={i} className="flex items-start">
+                      <div className={`${colors.text} mr-2 text-xs`}>•</div>
+                      <div className="text-xs text-gray-700">{activity}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* 출력 */}
+                <div className="mt-auto">
+                  <div className="bg-white border border-gray-300 rounded p-2 text-center">
+                    <div className="text-xs text-gray-500">Output</div>
+                    <div className="text-xs font-semibold text-gray-700">{stage.output}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* 효율성 지표 */}
+      <div className="grid grid-cols-3 gap-4 mb-6">
+        <div className="bg-blue-50 p-4 rounded-lg border-2 border-blue-200">
+          <div className="text-sm text-blue-600 font-semibold mb-1">리스크 진단</div>
+          <div className="text-2xl font-bold text-blue-800">96% 단축</div>
+          <div className="text-xs text-gray-600 mt-1">2시간 → 5분</div>
+        </div>
+        <div className="bg-purple-50 p-4 rounded-lg border-2 border-purple-200">
+          <div className="text-sm text-purple-600 font-semibold mb-1">제안서 작성</div>
+          <div className="text-2xl font-bold text-purple-800">97% 단축</div>
+          <div className="text-xs text-gray-600 mt-1">3시간 → 5분</div>
+        </div>
+        <div className="bg-green-50 p-4 rounded-lg border-2 border-green-200">
+          <div className="text-sm text-green-600 font-semibold mb-1">평균 효율</div>
+          <div className="text-2xl font-bold text-green-800">94% 단축</div>
+          <div className="text-xs text-gray-600 mt-1">6시간 → 20분</div>
+        </div>
+      </div>
+
+      {/* 기술 스택 */}
+      <div className="p-4 bg-gray-50 rounded-lg border-l-4 border-blue-500">
+        <div className="font-semibold text-gray-800 mb-3">🛠 기술 스택</div>
+        <div className="grid grid-cols-4 gap-3 text-xs">
+          <div>
+            <div className="font-semibold text-blue-600 mb-1">Layer 1: Notion</div>
+            <div className="text-gray-600">SoR, PARA 구조</div>
+          </div>
+          <div>
+            <div className="font-semibold text-purple-600 mb-1">Layer 2: Python</div>
+            <div className="text-gray-600">LangChain, LLM API</div>
+          </div>
+          <div>
+            <div className="font-semibold text-green-600 mb-1">Layer 3: Genspark</div>
+            <div className="text-gray-600">AI 전화, 웹 검색</div>
+          </div>
+          <div>
+            <div className="font-semibold text-orange-600 mb-1">Storage</div>
+            <div className="text-gray-600">Cloud Run, PostgreSQL</div>
+          </div>
+        </div>
+      </div>
+
+      {/* 인사이트 */}
+      <div className="mt-4 p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+        <div className="flex items-start">
+          <div className="text-green-500 mr-3 text-xl">💡</div>
+          <div>
+            <div className="font-semibold text-gray-800 mb-1">핵심 인사이트</div>
+            <div className="text-sm text-gray-600">
+              전통적으로 6시간 걸리던 1건 영업 프로세스를 <span className="font-bold text-green-600">20분으로 단축</span>. 
+              FTE 3명이 <span className="font-bold text-green-600">연간 15,000명 처리 가능</span>한 레버리지 구조.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ZOBISProcessDiagram;
+
+import React from 'react';
+
+const ExpansionRoadmap = () => {
+  const phases = [
+    {
+      phase: 'Phase 1',
+      period: 'Year 1',
+      title: 'Pilot Success',
+      subtitle: '모델 검증',
+      goal: 'KRW 1억',
+      color: 'blue',
+      associations: [
+        { name: 'KSA (세무사)', members: '17,000명' },
+        { name: 'KCA (관세사)', members: '2,000명' }
+      ],
+      penetration: '5-7.5%',
+      subscribers: '1,000명',
+      strategy: 'Pass A 특약형 (PI 연계)',
+      budget: 'KRW 3억'
+    },
+    {
+      phase: 'Phase 2',
+      period: 'Year 2-3',
+      title: 'Volume Expansion',
+      subtitle: '의료군 집중 공략',
+      goal: 'Year 3: KRW 8억',
+      color: 'purple',
+      associations: [
+        { name: 'KMA (의사)', members: '141,899명' },
+        { name: '병원협회', members: '3,500병원' },
+        { name: 'KICPA (회계)', members: '18,000명' }
+      ],
+      penetration: '3-5%',
+      subscribers: 'Year 3 누적 8,000명',
+      strategy: 'Pass B 독립형 (고한도)',
+      budget: 'Year 2-3 누적 KRW 5억'
+    },
+    {
+      phase: 'Phase 3',
+      period: 'Year 4-5',
+      title: 'Market Leadership',
+      subtitle: '전 협회 확장',
+      goal: 'Year 5: KRW 15억',
+      color: 'green',
+      associations: [
+        { name: '상위 15개 협회 전체', members: '~300,000명' },
+        { name: '핀테크/VAN', members: '' },
+        { name: '금융/법률/엔지니어링', members: '' }
+      ],
+      penetration: '10%',
+      subscribers: 'Year 5 누적 15,000명',
+      strategy: '협회별 맞춤형 라인업 완성',
+      budget: 'Year 4-5 누적 KRW 5억'
+    }
+  ];
+
+  const getColorClasses = (color) => {
+    const colors = {
+      blue: { 
+        bg: 'bg-blue-500', 
+        light: 'bg-blue-50', 
+        border: 'border-blue-300', 
+        text: 'text-blue-600',
+        gradient: 'from-blue-400 to-blue-600'
+      },
+      purple: { 
+        bg: 'bg-purple-500', 
+        light: 'bg-purple-50', 
+        border: 'border-purple-300', 
+        text: 'text-purple-600',
+        gradient: 'from-purple-400 to-purple-600'
+      },
+      green: { 
+        bg: 'bg-green-500', 
+        light: 'bg-green-50', 
+        border: 'border-green-300', 
+        text: 'text-green-600',
+        gradient: 'from-green-400 to-green-600'
+      }
+    };
+    return colors[color];
+  };
+
+  return (
+    <div className="w-full h-full bg-white p-8">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">
+          FIG 5-1: 3단계 시장 확장 로드맵
+        </h2>
+        <p className="text-sm text-gray-600">
+          파일럿 검증 → 의료군 집중 → 전 협회 확장의 단계적 시장 선점 전략
+        </p>
+      </div>
+
+      {/* 타임라인 */}
+      <div className="relative mb-8">
+        <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 via-purple-400 to-green-400"></div>
+        <div className="relative grid grid-cols-3 gap-8">
+          {phases.map((phase, idx) => {
+            const colors = getColorClasses(phase.color);
+            return (
+              <div key={idx} className="relative">
+                {/* 타임라인 포인트 */}
+                <div className={`absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 ${colors.bg} rounded-full border-4 border-white shadow-lg`}></div>
+                
+                {/* Phase 카드 */}
+                <div className={`${colors.light} border-2 ${colors.border} rounded-lg p-5 mt-4 shadow-md`}>
+                  {/* 헤더 */}
+                  <div className={`bg-gradient-to-r ${colors.gradient} text-white rounded-md p-3 mb-4 text-center`}>
+                    <div className="text-xs font-semibold mb-1">{phase.phase}</div>
+                    <div className="text-sm font-bold mb-1">{phase.title}</div>
+                    <div className="text-xs">{phase.subtitle}</div>
+                  </div>
+
+                  {/* 기간 & 목표 */}
+                  <div className="mb-4 space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs text-gray-600">기간:</span>
+                      <span className="text-sm font-semibold text-gray-800">{phase.period}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs text-gray-600">목표 매출:</span>
+                      <span className={`text-sm font-bold ${colors.text}`}>{phase.goal}</span>
+                    </div>
+                  </div>
+
+                  {/* 타겟 협회 */}
+                  <div className="mb-4">
+                    <div className="text-xs font-semibold text-gray-700 mb-2">타겟 협회:</div>
+                    <div className="space-y-1">
+                      {phase.associations.map((assoc, i) => (
+                        <div key={i} className="text-xs bg-white p-2 rounded border border-gray-200">
+                          <div className="font-semibold text-gray-800">{assoc.name}</div>
+                          {assoc.members && (
+                            <div className="text-gray-600">{assoc.members}</div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 지표 */}
+                  <div className="space-y-2 mb-4">
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="text-gray-600">침투율:</span>
+                      <span className="font-semibold text-gray-800">{phase.penetration}</span>
+                    </div>
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="text-gray-600">가입자:</span>
+                      <span className="font-semibold text-gray-800">{phase.subscribers}</span>
+                    </div>
+                  </div>
+
+                  {/* 전략 */}
+                  <div className={`${colors.bg} bg-opacity-10 p-2 rounded text-xs`}>
+                    <div className="font-semibold text-gray-700 mb-1">전략:</div>
+                    <div className="text-gray-700">{phase.strategy}</div>
+                  </div>
+
+                  {/* 예산 */}
+                  <div className="mt-3 pt-3 border-t border-gray-300">
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs text-gray-600">예산:</span>
+                      <span className={`text-sm font-bold ${colors.text}`}>{phase.budget}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* 누적 성과 지표 */}
+      <div className="grid grid-cols-5 gap-3 mb-6">
+        <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg border-2 border-blue-200">
+          <div className="text-xs text-blue-600 font-semibold mb-1">Year 1</div>
+          <div className="text-xl font-bold text-blue-800">1,000명</div>
+          <div className="text-xs text-gray-600">KRW 1억</div>
+        </div>
+        <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-4 rounded-lg border-2 border-purple-200">
+          <div className="text-xs text-purple-600 font-semibold mb-1">Year 2</div>
+          <div className="text-xl font-bold text-purple-800">5,000명</div>
+          <div className="text-xs text-gray-600">KRW 5억</div>
+        </div>
+        <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-4 rounded-lg border-2 border-purple-200">
+          <div className="text-xs text-purple-600 font-semibold mb-1">Year 3</div>
+          <div className="text-xl font-bold text-purple-800">8,000명</div>
+          <div className="text-xs text-gray-600">KRW 8억</div>
+        </div>
+        <div className="bg-gradient-to-br from-green-50 to-green-100 p-4 rounded-lg border-2 border-green-200">
+          <div className="text-xs text-green-600 font-semibold mb-1">Year 4</div>
+          <div className="text-xl font-bold text-green-800">10,000명</div>
+          <div className="text-xs text-gray-600">KRW 10억</div>
+        </div>
+        <div className="bg-gradient-to-br from-green-50 to-green-100 p-4 rounded-lg border-2 border-green-200">
+          <div className="text-xs text-green-600 font-semibold mb-1">Year 5</div>
+          <div className="text-xl font-bold text-green-800">15,000명</div>
+          <div className="text-xs text-gray-600">KRW 15억</div>
+        </div>
+      </div>
+
+      {/* 핵심 전략 */}
+      <div className="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+        <div className="font-semibold text-blue-800 mb-2">🎯 핵심 전략 포인트</div>
+        <div className="grid grid-cols-3 gap-4 text-xs text-gray-700">
+          <div>
+            <div className="font-semibold text-blue-600 mb-1">Phase 1</div>
+            <div>검증된 PI 채널로 빠른 초기 성공 → 신뢰도 확보</div>
+          </div>
+          <div>
+            <div className="font-semibold text-purple-600 mb-1">Phase 2</div>
+            <div>대규모 협회 진입으로 Volume 확보 → 브랜드 구축</div>
+          </div>
+          <div>
+            <div className="font-semibold text-green-600 mb-1">Phase 3</div>
+            <div>전 업종 확장으로 시장 리더십 → 30% 점유율</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ExpansionRoadmap;
+
+import React from 'react';
+import { AreaChart, Area, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+
+const ROIScenarios = () => {
+  const data = [
+    { year: 'Year 0', worst: 0, base: 0, best: 0 },
+    { year: 'Year 1', worst: -2, base: -2, best: -1.5 },
+    { year: 'Year 2', worst: -1, base: 0.7, best: 3.5 },
+    { year: 'Year 3', worst: 1, base: 6.2, best: 15 },
+    { year: 'Year 4', worst: 2.5, base: 13.7, best: 35 },
+    { year: 'Year 5', worst: 4.2, base: 25.7, best: 65 },
+  ];
+
+  const scenarios = [
+    {
+      name: 'Worst Case',
+      color: '#FF6B6B',
+      roi: '37%',
+      revenue: 'KRW 6억',
+      subscribers: '6,000명',
+      assumptions: ['협회 추천 확보 실패', '연간 성장률 50%', '가격 경쟁 심화']
+    },
+    {
+      name: 'Base Case',
+      color: '#0066CC',
+      roi: '242%',
+      revenue: 'KRW 15억',
+      subscribers: '15,000명',
+      assumptions: ['협회 공식 추천', 'ZOBIS 효과 발현', '계획대로 실행']
+    },
+    {
+      name: 'Best Case',
+      color: '#00AA44',
+      roi: '500%',
+      revenue: 'KRW 30억',
+      subscribers: '30,000명',
+      assumptions: ['바이럴 효과 극대화', '시장 선도 효과', '고한도 상품 비중↑']
+    }
+  ];
+
+  return (
+    <div className="w-full h-full bg-white p-8">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">
+          FIG 6-1: ROI 분석 시나리오 차트
+        </h2>
+        <p className="text-sm text-gray-600">
+          3가지 시나리오별 5년 누적 순이익 비교 (Worst/Base/Best Case)
+        </p>
+      </div>
+
+      {/* 면적 차트 */}
+      <div className="mb-8">
+        <ResponsiveContainer width="100%" height={350}>
+          <AreaChart data={data}>
+            <defs>
+              <linearGradient id="colorBest" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#00AA44" stopOpacity={0.3}/>
+                <stop offset="95%" stopColor="#00AA44" stopOpacity={0}/>
+              </linearGradient>
+              <linearGradient id="colorBase" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#0066CC" stopOpacity={0.3}/>
+                <stop offset="95%" stopColor="#0066CC" stopOpacity={0}/>
+              </linearGradient>
+              <linearGradient id="colorWorst" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#FF6B6B" stopOpacity={0.3}/>
+                <stop offset="95%" stopColor="#FF6B6B" stopOpacity={0}/>
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+            <XAxis dataKey="year" />
+            <YAxis 
+              label={{ value: '누적 순이익 (억원)', angle: -90, position: 'insideLeft' }}
+            />
+            <Tooltip 
+              formatter={(value) => `${value}억원`}
+              contentStyle={{ backgroundColor: '#fff', border: '1px solid #ccc' }}
+            />
+            <Legend />
+            <Area 
+              type="monotone" 
+              dataKey="best" 
+              stroke="#00AA44" 
+              strokeWidth={3}
+              fillOpacity={1} 
+              fill="url(#colorBest)" 
+              name="Best Case (KRW 65억)"
+            />
+            <Area 
+              type="monotone" 
+              dataKey="base" 
+              stroke="#0066CC" 
+              strokeWidth={3}
+              fillOpacity={1} 
+              fill="url(#colorBase)" 
+              name="Base Case (KRW 27.6억)"
+            />
+            <Area 
+              type="monotone" 
+              dataKey="worst" 
+              stroke="#FF6B6B" 
+              strokeWidth={3}
+              fillOpacity={1} 
+              fill="url(#colorWorst)" 
+              name="Worst Case (KRW 4.2억)"
+            />
+          </AreaChart>
+        </ResponsiveContainer>
+      </div>
+
+      {/* 시나리오 비교 카드 */}
+      <div className="grid grid-cols-3 gap-4 mb-6">
+        {scenarios.map((scenario, idx) => (
+          <div 
+            key={idx} 
+            className="bg-white border-2 rounded-lg p-4 shadow-md"
+            style={{ borderColor: scenario.color }}
+          >
+            <div 
+              className="text-white font-bold text-lg mb-3 p-2 rounded text-center"
+              style={{ backgroundColor: scenario.color }}
+            >
+              {scenario.name}
+            </div>
+            
+            <div className="space-y-3">
+              <div>
+                <div className="text-xs text-gray-500 mb-1">ROI</div>
+                <div className="text-2xl font-bold" style={{ color: scenario.color }}>
+                  {scenario.roi}
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div>
+                  <div className="text-gray-500 mb-1">Year 5 매출</div>
+                  <div className="font-semibold text-gray-800">{scenario.revenue}</div>
+                </div>
+                <div>
+                  <div className="text-gray-500 mb-1">누적 가입자</div>
+                  <div className="font-semibold text-gray-800">{scenario.subscribers}</div>
+                </div>
+              </div>
+
+              <div>
+                <div className="text-xs text-gray-500 mb-2">주요 가정:</div>
+                <div className="space-y-1">
+                  {scenario.assumptions.map((assumption, i) => (
+                    <div key={i} className="text-xs text-gray-700 flex items-start">
+                      <span className="mr-1">•</span>
+                      <span>{assumption}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Break-Even 분석 */}
+      <div className="grid grid-cols-3 gap-4 mb-6">
+        <div className="bg-red-50 p-4 rounded-lg border-2 border-red-200">
+          <div className="text-sm text-red-600 font-semibold mb-1">Worst Case</div>
+          <div className="text-xl font-bold text-red-800">48개월</div>
+          <div className="text-xs text-gray-600 mt-1">Year 3 Q4 Break-Even</div>
+        </div>
+        <div className="bg-blue-50 p-4 rounded-lg border-2 border-blue-200">
+          <div className="text-sm text-blue-600 font-semibold mb-1">Base Case</div>
+          <div className="text-xl font-bold text-blue-800">27개월</div>
+          <div className="text-xs text-gray-600 mt-1">Year 3 Q1 Break-Even</div>
+        </div>
+        <div className="bg-green-50 p-4 rounded-lg border-2 border-green-200">
+          <div className="text-sm text-green-600 font-semibold mb-1">Best Case</div>
+          <div className="text-xl font-bold text-green-800">18개월</div>
+          <div className="text-xs text-gray-600 mt-1">Year 2 Q2 Break-Even</div>
+        </div>
+      </div>
+
+      {/* 핵심 인사이트 */}
+      <div className="p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+        <div className="flex items-start">
+          <div className="text-green-500 mr-3 text-xl">✅</div>
+          <div>
+            <div className="font-semibold text-gray-800 mb-1">핵심 결론</div>
+            <div className="text-sm text-gray-700">
+              <span className="font-bold text-green-600">모든 시나리오에서 4년 이내 투자 회수 가능</span>. 
+              Base Case 기준 Year 3 Q1 (27개월)에 Break-Even 달성하여 
+              <span className="font-bold text-blue-600"> 5년 누적 KRW 27.6억 순이익</span> (ROI 242%) 창출. 
+              심지어 최악의 경우(Worst Case)에도 <span className="font-bold">ROI 37% 달성으로 투자 안정성 입증</span>.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 민감도 분석 */}
+      <div className="mt-4 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+        <div className="font-semibold text-blue-800 mb-2">📊 민감도 분석</div>
+        <div className="grid grid-cols-3 gap-4 text-xs text-gray-700">
+          <div>
+            <div className="font-semibold text-blue-600 mb-1">침투율 ±30%</div>
+            <div>ROI 37% ~ 500% 범위 유지</div>
+          </div>
+          <div>
+            <div className="font-semibold text-blue-600 mb-1">보험료 ±20%</div>
+            <div>Base Case 여전히 ROI 200%+</div>
+          </div>
+          <div>
+            <div className="font-semibold text-blue-600 mb-1">ZOBIS 개발비 2배</div>
+            <div>ROI 220% (여전히 높은 수준)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ROIScenarios;
+
+import React from 'react';
+import { AreaChart, Area, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+
+const ROIScenarios = () => {
+  const data = [
+    { year: 'Year 0', worst: 0, base: 0, best: 0 },
+    { year: 'Year 1', worst: -2, base: -2, best: -1.5 },
+    { year: 'Year 2', worst: -1, base: 0.7, best: 3.5 },
+    { year: 'Year 3', worst: 1, base: 6.2, best: 15 },
+    { year: 'Year 4', worst: 2.5, base: 13.7, best: 35 },
+    { year: 'Year 5', worst: 4.2, base: 25.7, best: 65 },
+  ];
+
+  const scenarios = [
+    {
+      name: 'Worst Case',
+      color: '#FF6B6B',
+      roi: '37%',
+      revenue: 'KRW 6억',
+      subscribers: '6,000명',
+      assumptions: ['협회 추천 확보 실패', '연간 성장률 50%', '가격 경쟁 심화']
+    },
+    {
+      name: 'Base Case',
+      color: '#0066CC',
+      roi: '242%',
+      revenue: 'KRW 15억',
+      subscribers: '15,000명',
+      assumptions: ['협회 공식 추천', 'ZOBIS 효과 발현', '계획대로 실행']
+    },
+    {
+      name: 'Best Case',
+      color: '#00AA44',
+      roi: '500%',
+      revenue: 'KRW 30억',
+      subscribers: '30,000명',
+      assumptions: ['바이럴 효과 극대화', '시장 선도 효과', '고한도 상품 비중↑']
+    }
+  ];
+
+  return (
+    <div className="w-full h-full bg-white p-8">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">
+          FIG 6-1: ROI 분석 시나리오 차트
+        </h2>
+        <p className="text-sm text-gray-600">
+          3가지 시나리오별 5년 누적 순이익 비교 (Worst/Base/Best Case)
+        </p>
+      </div>
+
+      {/* 면적 차트 */}
+      <div className="mb-8">
+        <ResponsiveContainer width="100%" height={350}>
+          <AreaChart data={data}>
+            <defs>
+              <linearGradient id="colorBest" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#00AA44" stopOpacity={0.3}/>
+                <stop offset="95%" stopColor="#00AA44" stopOpacity={0}/>
+              </linearGradient>
+              <linearGradient id="colorBase" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#0066CC" stopOpacity={0.3}/>
+                <stop offset="95%" stopColor="#0066CC" stopOpacity={0}/>
+              </linearGradient>
+              <linearGradient id="colorWorst" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#FF6B6B" stopOpacity={0.3}/>
+                <stop offset="95%" stopColor="#FF6B6B" stopOpacity={0}/>
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+            <XAxis dataKey="year" />
+            <YAxis 
+              label={{ value: '누적 순이익 (억원)', angle: -90, position: 'insideLeft' }}
+            />
+            <Tooltip 
+              formatter={(value) => `${value}억원`}
+              contentStyle={{ backgroundColor: '#fff', border: '1px solid #ccc' }}
+            />
+            <Legend />
+            <Area 
+              type="monotone" 
+              dataKey="best" 
+              stroke="#00AA44" 
+              strokeWidth={3}
+              fillOpacity={1} 
+              fill="url(#colorBest)" 
+              name="Best Case (KRW 65억)"
+            />
+            <Area 
+              type="monotone" 
+              dataKey="base" 
+              stroke="#0066CC" 
+              strokeWidth={3}
+              fillOpacity={1} 
+              fill="url(#colorBase)" 
+              name="Base Case (KRW 27.6억)"
+            />
+            <Area 
+              type="monotone" 
+              dataKey="worst" 
+              stroke="#FF6B6B" 
+              strokeWidth={3}
+              fillOpacity={1} 
+              fill="url(#colorWorst)" 
+              name="Worst Case (KRW 4.2억)"
+            />
+          </AreaChart>
+        </ResponsiveContainer>
+      </div>
+
+      {/* 시나리오 비교 카드 */}
+      <div className="grid grid-cols-3 gap-4 mb-6">
+        {scenarios.map((scenario, idx) => (
+          <div 
+            key={idx} 
+            className="bg-white border-2 rounded-lg p-4 shadow-md"
+            style={{ borderColor: scenario.color }}
+          >
+            <div 
+              className="text-white font-bold text-lg mb-3 p-2 rounded text-center"
+              style={{ backgroundColor: scenario.color }}
+            >
+              {scenario.name}
+            </div>
+            
+            <div className="space-y-3">
+              <div>
+                <div className="text-xs text-gray-500 mb-1">ROI</div>
+                <div className="text-2xl font-bold" style={{ color: scenario.color }}>
+                  {scenario.roi}
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div>
+                  <div className="text-gray-500 mb-1">Year 5 매출</div>
+                  <div className="font-semibold text-gray-800">{scenario.revenue}</div>
+                </div>
+                <div>
+                  <div className="text-gray-500 mb-1">누적 가입자</div>
+                  <div className="font-semibold text-gray-800">{scenario.subscribers}</div>
+                </div>
+              </div>
+
+              <div>
+                <div className="text-xs text-gray-500 mb-2">주요 가정:</div>
+                <div className="space-y-1">
+                  {scenario.assumptions.map((assumption, i) => (
+                    <div key={i} className="text-xs text-gray-700 flex items-start">
+                      <span className="mr-1">•</span>
+                      <span>{assumption}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Break-Even 분석 */}
+      <div className="grid grid-cols-3 gap-4 mb-6">
+        <div className="bg-red-50 p-4 rounded-lg border-2 border-red-200">
+          <div className="text-sm text-red-600 font-semibold mb-1">Worst Case</div>
+          <div className="text-xl font-bold text-red-800">48개월</div>
+          <div className="text-xs text-gray-600 mt-1">Year 3 Q4 Break-Even</div>
+        </div>
+        <div className="bg-blue-50 p-4 rounded-lg border-2 border-blue-200">
+          <div className="text-sm text-blue-600 font-semibold mb-1">Base Case</div>
+          <div className="text-xl font-bold text-blue-800">27개월</div>
+          <div className="text-xs text-gray-600 mt-1">Year 3 Q1 Break-Even</div>
+        </div>
+        <div className="bg-green-50 p-4 rounded-lg border-2 border-green-200">
+          <div className="text-sm text-green-600 font-semibold mb-1">Best Case</div>
+          <div className="text-xl font-bold text-green-800">18개월</div>
+          <div className="text-xs text-gray-600 mt-1">Year 2 Q2 Break-Even</div>
+        </div>
+      </div>
+
+      {/* 핵심 인사이트 */}
+      <div className="p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+        <div className="flex items-start">
+          <div className="text-green-500 mr-3 text-xl">✅</div>
+          <div>
+            <div className="font-semibold text-gray-800 mb-1">핵심 결론</div>
+            <div className="text-sm text-gray-700">
+              <span className="font-bold text-green-600">모든 시나리오에서 4년 이내 투자 회수 가능</span>. 
+              Base Case 기준 Year 3 Q1 (27개월)에 Break-Even 달성하여 
+              <span className="font-bold text-blue-600"> 5년 누적 KRW 27.6억 순이익</span> (ROI 242%) 창출. 
+              심지어 최악의 경우(Worst Case)에도 <span className="font-bold">ROI 37% 달성으로 투자 안정성 입증</span>.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 민감도 분석 */}
+      <div className="mt-4 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+        <div className="font-semibold text-blue-800 mb-2">📊 민감도 분석</div>
+        <div className="grid grid-cols-3 gap-4 text-xs text-gray-700">
+          <div>
+            <div className="font-semibold text-blue-600 mb-1">침투율 ±30%</div>
+            <div>ROI 37% ~ 500% 범위 유지</div>
+          </div>
+          <div>
+            <div className="font-semibold text-blue-600 mb-1">보험료 ±20%</div>
+            <div>Base Case 여전히 ROI 200%+</div>
+          </div>
+          <div>
+            <div className="font-semibold text-blue-600 mb-1">ZOBIS 개발비 2배</div>
+            <div>ROI 220% (여전히 높은 수준)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ROIScenarios;
+
+import React from 'react';
+
+const Year1GanttChart = () => {
+  const milestones = [
+    { id: 'M1', name: 'TF팀 구성', start: 1, duration: 1, color: 'blue', budget: '2천만', critical: true },
+    { id: 'M2', name: 'KSA/KCA MOU 체결', start: 2, duration: 2, color: 'purple', budget: '2천만', critical: true },
+    { id: 'M3', name: 'ZOBIS MVP 개발', start: 3, duration: 3, color: 'green', budget: '3천만', critical: true },
+    { id: 'M4', name: 'R-Score 엔진 완성', start: 5, duration: 3, color: 'green', budget: '3천만', critical: true },
+    { id: 'M5', name: '상품 설계 완료', start: 5, duration: 2, color: 'orange', budget: '2천만', critical: false },
+    { id: 'M6', name: '보험사 협상', start: 6, duration: 2, color: 'orange', budget: '1천만', critical: false },
+    { id: 'M7', name: '파일럿 론칭 (KSA)', start: 7, duration: 1, color: 'red', budget: '1.5천만', critical: true },
+    { id: 'M8', name: '100명 가입 달성', start: 8, duration: 1, color: 'red', budget: '-', critical: false },
+    { id: 'M9', name: '파일럿 확대 (KCA)', start: 9, duration: 1, color: 'red', budget: '500만', critical: false },
+    { id: 'M10', name: '500명 가입 달성', start: 10, duration: 1, color: 'red', budget: '-', critical: false },
+    { id: 'M11', name: 'ZOBIS V2.0 고도화', start: 11, duration: 1, color: 'green', budget: '2천만', critical: false },
+    { id: 'M12', name: '1,000명 달성', start: 12, duration: 1, color: 'gold', budget: '-', critical: true },
+  ];
+
+  const months = Array.from({ length: 12 }, (_, i) => i + 1);
+
+  const getColorClasses = (color) => {
+    const colors = {
+      blue: { bg: 'bg-blue-500', light: 'bg-blue-200' },
+      purple: { bg: 'bg-purple-500', light: 'bg-purple-200' },
+      green: { bg: 'bg-green-500', light: 'bg-green-200' },
+      orange: { bg: 'bg-orange-500', light: 'bg-orange-200' },
+      red: { bg: 'bg-red-500', light: 'bg-red-200' },
+      gold: { bg: 'bg-yellow-500', light: 'bg-yellow-200' }
+    };
+    return colors[color] || colors.blue;
+  };
+
+  return (
+    <div className="w-full h-full bg-white p-8">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">
+          FIG 5-2: Year 1 실행 간트차트 (12개 마일스톤)
+        </h2>
+        <p className="text-sm text-gray-600">
+          TF 구성부터 1,000명 가입 달성까지의 월별 실행 계획
+        </p>
+      </div>
+
+      {/* 범례 */}
+      <div className="mb-4 p-3 bg-gray-50 rounded-lg flex items-center gap-6 text-xs">
+        <div className="flex items-center gap-2">
+          <div className="w-4 h-4 bg-blue-500 rounded"></div>
+          <span>조직/계약</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-4 h-4 bg-green-500 rounded"></div>
+          <span>시스템 개발</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-4 h-4 bg-orange-500 rounded"></div>
+          <span>상품/협상</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-4 h-4 bg-red-500 rounded"></div>
+          <span>영업/론칭</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-4 h-4 bg-yellow-500 rounded"></div>
+          <span>목표 달성</span>
+        </div>
+        <div className="ml-auto flex items-center gap-2">
+          <span className="text-red-600 font-bold">★</span>
+          <span>핵심 마일스톤</span>
+        </div>
+      </div>
+
+      {/* 간트차트 */}
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse">
+          <thead>
+            <tr className="bg-gray-700 text-white">
+              <th className="p-2 text-left text-xs font-semibold w-32">마일스톤</th>
+              <th className="p-2 text-left text-xs font-semibold w-48">작업명</th>
+              <th className="p-2 text-center text-xs font-semibold w-20">예산</th>
+              {months.map((month) => (
+                <th key={month} className="p-1 text-center text-xs font-semibold w-16">
+                  M{month}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {milestones.map((milestone, idx) => {
+              const colors = getColorClasses(milestone.color);
+              return (
+                <tr key={idx} className="border-b hover:bg-gray-50">
+                  <td className="p-2 text-sm font-semibold text-gray-700">
+                    {milestone.critical && <span className="text-red-600 mr-1">★</span>}
+                    {milestone.id}
+                  </td>
+                  <td className="p-2 text-xs text-gray-700">{milestone.name}</td>
+                  <td className="p-2 text-xs text-center text-gray-600">{milestone.budget}</td>
+                  {months.map((month) => {
+                    const isActive = month >= milestone.start && month < milestone.start + milestone.duration;
+                    const isStart = month === milestone.start;
+                    const isEnd = month === milestone.start + milestone.duration - 1;
+                    
+                    return (
+                      <td key={month} className="p-0">
+                        {isActive && (
+                          <div className={`h-8 ${colors.bg} ${isStart ? 'rounded-l-full' : ''} ${isEnd ? 'rounded-r-full' : ''}`}>
+                          </div>
+                        )}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      {/* 핵심 KPI */}
+      <div className="mt-6 grid grid-cols-4 gap-3">
+        <div className="bg-blue-50 p-3 rounded-lg border-2 border-blue-200">
+          <div className="text-xs text-blue-600 font-semibold mb-1">M2 (2개월)</div>
+          <div className="text-lg font-bold text-blue-800">MOU 체결</div>
+          <div className="text-xs text-gray-600 mt-1">KSA + KCA</div>
+        </div>
+        <div className="bg-green-50 p-3 rounded-lg border-2 border-green-200">
+          <div className="text-xs text-green-600 font-semibold mb-1">M4 (4개월)</div>
+          <div className="text-lg font-bold text-green-800">ZOBIS 완성</div>
+          <div className="text-xs text-gray-600 mt-1">MVP + R-Score</div>
+        </div>
+        <div className="bg-red-50 p-3 rounded-lg border-2 border-red-200">
+          <div className="text-xs text-red-600 font-semibold mb-1">M7 (7개월)</div>
+          <div className="text-lg font-bold text-red-800">파일럿 론칭</div>
+          <div className="text-xs text-gray-600 mt-1">KSA 대상</div>
+        </div>
+        <div className="bg-yellow-50 p-3 rounded-lg border-2 border-yellow-200">
+          <div className="text-xs text-yellow-600 font-semibold mb-1">M12 (12개월)</div>
+          <div className="text-lg font-bold text-yellow-800">1,000명</div>
+          <div className="text-xs text-gray-600 mt-1">Year 1 목표</div>
+        </div>
+      </div>
+
+      {/* 투자 집행 요약 */}
+      <div className="mt-6 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+        <div className="font-semibold text-blue-800 mb-2">💰 Year 1 투자 집행 계획</div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <div className="text-sm text-gray-700 mb-2">시스템 개발비 (M1-M11):</div>
+            <ul className="text-xs text-gray-600 space-y-1">
+              <li>• ZOBIS MVP 개발: KRW 3천만</li>
+              <li>• R-Score 엔진: KRW 3천만</li>
+              <li>• ZOBIS V2.0 고도화: KRW 2천만</li>
+              <li>• TF 구성: KRW 2천만</li>
+              <li className="font-bold pt-1 border-t">→ 소계: KRW 1억</li>
+            </ul>
+          </div>
+          <div>
+            <div className="text-sm text-gray-700 mb-2">영업/마케팅비 (M2-M9):</div>
+            <ul className="text-xs text-gray-600 space-y-1">
+              <li>• MOU 협상: KRW 2천만</li>
+              <li>• 상품 설계: KRW 2천만</li>
+              <li>• 파일럿 마케팅: KRW 2천만</li>
+              <li>• 보험사 협상: KRW 1천만</li>
+              <li className="font-bold pt-1 border-t">→ 소계: KRW 7천만</li>
+            </ul>
+          </div>
+        </div>
+        <div className="mt-3 pt-3 border-t border-blue-200">
+          <div className="flex justify-between items-center">
+            <span className="text-sm font-semibold text-gray-700">Year 1 총 투자액 (인건비 제외):</span>
+            <span className="text-xl font-bold text-blue-800">KRW 1.7억</span>
+          </div>
+          <div className="flex justify-between items-center mt-1">
+            <span className="text-xs text-gray-600">인건비 (FTE 3.0명):</span>
+            <span className="text-sm font-semibold text-gray-700">KRW 2억</span>
+          </div>
+          <div className="flex justify-between items-center mt-2 pt-2 border-t border-blue-300">
+            <span className="text-sm font-bold text-blue-800">총 Year 1 투자:</span>
+            <span className="text-2xl font-bold text-blue-900">KRW 3.7억</span>
+          </div>
+        </div>
+      </div>
+
+      {/* 리스크 체크포인트 */}
+      <div className="mt-4 p-4 bg-orange-50 rounded-lg border-l-4 border-orange-500">
+        <div className="font-semibold text-orange-800 mb-2">⚠️ 주요 리스크 체크포인트</div>
+        <div className="grid grid-cols-3 gap-3 text-xs text-gray-700">
+          <div>
+            <div className="font-semibold text-orange-600 mb-1">M2 (MOU)</div>
+            <div>협회 이사진 승인 실패 시 → 대체 협회 즉시 접촉</div>
+          </div>
+          <div>
+            <div className="font-semibold text-orange-600 mb-1">M4 (ZOBIS)</div>
+            <div>개발 지연 시 → 수동 프로세스 백업 운영</div>
+          </div>
+          <div>
+            <div className="font-semibold text-orange-600 mb-1">M8 (100명)</div>
+            <div>가입 저조 시 → 무료 체험 기간 도입</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Year1GanttChart;
+
+import React from 'react';
+
+const CoverageMatrix = () => {
+  const coverages = [
+    { name: '랜섬웨어 복구비용', pi: 'none', cyber: 'partial', passA: 'full', passB: 'full', detail: 'KRW 200만 vs 3천만-1억' },
+    { name: '랜섬 몸값 협상 비용', pi: 'none', cyber: 'partial', passA: 'full', passB: 'full', detail: 'KRW 100만 vs 1천만-3천만' },
+    { name: '영업중단 손실 (BI)', pi: 'none', cyber: 'none', passA: 'full', passB: 'full', detail: '일 KRW 50-200만' },
+    { name: '데이터 복구 비용', pi: 'none', cyber: 'partial', passA: 'full', passB: 'full', detail: 'KRW 500만 vs 3천만-1억' },
+    { name: '포렌식 조사 비용', pi: 'none', cyber: 'full', passA: 'full', passB: 'full', detail: '실비 보상' },
+    { name: '법률 대응 비용', pi: 'partial', cyber: 'partial', passA: 'full', passB: 'full', detail: 'PI+사이버 통합' },
+    { name: '고객 손해배상 (PI)', pi: 'partial', cyber: 'none', passA: 'full', passB: 'full', detail: 'KRW 3-10억' },
+    { name: '제3자 정보유출 배상', pi: 'none', cyber: 'partial', passA: 'full', passB: 'full', detail: 'KRW 3-10억' },
+    { name: 'Wire Fraud (자금사기)', pi: 'none', cyber: 'partial', passA: 'full', passB: 'full', detail: 'KRW 200만 vs 5천만-5억' },
+    { name: 'PIPA 과징금 대응', pi: 'none', cyber: 'partial', passA: 'full', passB: 'full', detail: '법률비용+과징금 20-50%' },
+    { name: '평판 회복 비용', pi: 'none', cyber: 'partial', passA: 'full', passB: 'full', detail: 'KRW 500만 vs 2천만-5천만' },
+    { name: '위기 관리 PR', pi: 'none', cyber: 'none', passA: 'partial', passB: 'full', detail: '제한적 vs 완전 지원' },
+    { name: '공급망 장애 (CBI)', pi: 'none', cyber: 'none', passA: 'partial', passB: 'full', detail: 'BI의 50%' },
+    { name: '사이버 갈취 협박', pi: 'none', cyber: 'partial', passA: 'full', passB: 'full', detail: 'KRW 1천만 vs 3천만-1억' },
+    { name: '24시간 사고대응팀', pi: 'none', cyber: 'none', passA: 'full', passB: 'full', detail: '즉시 대응' },
+  ];
+
+  const getCoverageIcon = (level) => {
+    if (level === 'full') return { icon: '✅', bg: 'bg-green-100', text: 'text-green-700' };
+    if (level === 'partial') return { icon: '⚠️', bg: 'bg-yellow-100', text: 'text-yellow-700' };
+    return { icon: '❌', bg: 'bg-red-100', text: 'text-red-700' };
+  };
+
+  return (
+    <div className="w-full h-full bg-white p-8">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">
+          FIG 3-2: 보장 공백 비교 매트릭스
+        </h2>
+        <p className="text-sm text-gray-600">
+          15개 필수 담보 항목별 기존 보험 vs 록톤 듀얼상품 보장 범위 비교
+        </p>
+      </div>
+
+      {/* 범례 */}
+      <div className="mb-4 p-3 bg-gray-50 rounded-lg flex items-center gap-6 text-xs">
+        <div className="flex items-center gap-2">
+          <span className="text-lg">✅</span>
+          <span>완전 보장</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-lg">⚠️</span>
+          <span>부분 보장 또는 낮은 한도</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-lg">❌</span>
+          <span>미보장</span>
+        </div>
+      </div>
+
+      {/* 비교 테이블 */}
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse text-xs">
+          <thead>
+            <tr className="bg-gray-700 text-white">
+              <th className="p-3 text-left font-semibold w-48">전문직 필수 담보</th>
+              <th className="p-2 text-center font-semibold w-24">기존<br/>PI 보험</th>
+              <th className="p-2 text-center font-semibold w-24">일반<br/>사이버보험</th>
+              <th className="p-2 text-center font-semibold w-24 bg-blue-600">록톤<br/>Pass A</th>
+              <th className="p-2 text-center font-semibold w-24 bg-blue-700">록톤<br/>Pass B</th>
+              <th className="p-3 text-left font-semibold">보장 한도 비교</th>
+            </tr>
+          </thead>
+          <tbody>
+            {coverages.map((coverage, idx) => {
+              const piIcon = getCoverageIcon(coverage.pi);
+              const cyberIcon = getCoverageIcon(coverage.cyber);
+              const passAIcon = getCoverageIcon(coverage.passA);
+              const passBIcon = getCoverageIcon(coverage.passB);
+
+              return (
+                <tr key={idx} className="border-b hover:bg-gray-50">
+                  <td className="p-3 font-semibold text-gray-700">
+                    {idx + 1}. {coverage.name}
+                  </td>
+                  <td className={`p-2 text-center ${piIcon.bg}`}>
+                    <span className="text-lg">{piIcon.icon}</span>
+                  </td>
+                  <td className={`p-2 text-center ${cyberIcon.bg}`}>
+                    <span className="text-lg">{cyberIcon.icon}</span>
+                  </td>
+                  <td className={`p-2 text-center ${passAIcon.bg} border-l-2 border-blue-300`}>
+                    <span className="text-lg">{passAIcon.icon}</span>
+                  </td>
+                  <td className={`p-2 text-center ${passBIcon.bg}`}>
+                    <span className="text-lg">{passBIcon.icon}</span>
+                  </td>
+                  <td className="p-3 text-gray-600">
+                    {coverage.detail}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      {/* 통계 요약 */}
+      <div className="mt-6 grid grid-cols-4 gap-4">
+        <div className="bg-red-50 p-4 rounded-lg border-2 border-red-200">
+          <div className="text-sm text-red-600 font-semibold mb-1">기존 PI 보험</div>
+          <div className="text-3xl font-bold text-red-800">20%</div>
+          <div className="text-xs text-gray-600 mt-1">15개 중 3개만 보장</div>
+        </div>
+        <div className="bg-yellow-50 p-4 rounded-lg border-2 border-yellow-200">
+          <div className="text-sm text-yellow-600 font-semibold mb-1">일반 사이버보험</div>
+          <div className="text-3xl font-bold text-yellow-800">40%</div>
+          <div className="text-xs text-gray-600 mt-1">15개 중 6개 부분 보장</div>
+        </div>
+        <div className="bg-green-50 p-4 rounded-lg border-2 border-green-200">
+          <div className="text-sm text-green-600 font-semibold mb-1">록톤 Pass A</div>
+          <div className="text-3xl font-bold text-green-800">93%</div>
+          <div className="text-xs text-gray-600 mt-1">15개 중 14개 완전 보장</div>
+        </div>
+        <div className="bg-blue-50 p-4 rounded-lg border-2 border-blue-200">
+          <div className="text-sm text-blue-600 font-semibold mb-1">록톤 Pass B</div>
+          <div className="text-3xl font-bold text-blue-800">100%</div>
+          <div className="text-xs text-gray-600 mt-1">15개 전체 완전 보장</div>
+        </div>
+      </div>
+
+      {/* 핵심 차별점 */}
+      <div className="mt-6 grid grid-cols-2 gap-4">
+        <div className="p-4 bg-red-50 rounded-lg border-l-4 border-red-500">
+          <div className="font-semibold text-red-800 mb-2">❌ 기존 보험의 치명적 한계</div>
+          <ul className="text-xs text-gray-700 space-y-1">
+            <li>• PI 보험: "사이버 원인" 면책으로 랜섬웨어 전면 배제</li>
+            <li>• 사이버보험: "업무 관련" 면책으로 PI 손해 배제</li>
+            <li>• 한도 부족: B2C 기준 KRW 200만으로 전문가 실손해 턱없이 부족</li>
+            <li>• BI 미보장: 영업중단 손실이 가장 큰 손해임에도 불구하고 미보장</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+          <div className="font-semibold text-green-800 mb-2">✅ 록톤 듀얼상품의 강점</div>
+          <ul className="text-xs text-gray-700 space-y-1">
+            <li>• 원인-결과 통합: 사이버 원인 → PI 결과 전체 보장</li>
+            <li>• B2B 맞춤 한도: 실제 손해 규모 반영 (KRW 3-10억)</li>
+            <li>• BI 완전 보장: 일 KRW 50-200만 영업중단 보상</li>
+            <li>• 통합 클레임: 단일 창구 처리로 분쟁 제로</li>
+            <li>• 24시간 대응: 사고 즉시 전문팀 투입</li>
+          </ul>
+        </div>
+      </div>
+
+      {/* 실제 사례 */}
+      <div className="mt-4 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+        <div className="font-semibold text-blue-800 mb-2">💼 실제 보험금 분쟁 사례</div>
+        <div className="grid grid-cols-2 gap-4 text-xs text-gray-700">
+          <div>
+            <div className="font-semibold text-blue-600 mb-1">사례 1: 세무사 랜섬웨어</div>
+            <div>
+              • 손해액: KRW 5,000만 (고객 가산세)<br/>
+              • PI 보험: "사이버 원인" 면책<br/>
+              • 사이버보험: "업무 관련" 면책<br/>
+              • <span className="text-red-600 font-bold">→ 세무사가 전액 부담</span>
+            </div>
+          </div>
+          <div>
+            <div className="font-semibold text-green-600 mb-1">록톤 듀얼상품 가입 시</div>
+            <div>
+              • Pass B 독립형 가입<br/>
+              • 랜섬 복구비 KRW 1억 한도<br/>
+              • BI + PI 통합 KRW 10억 한도<br/>
+              • <span className="text-green-600 font-bold">→ KRW 5,000만 전액 보상</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CoverageMatrix;
+
+import React from 'react';
+
+const ZOBISArchitecture = () => {
+  const layers = [
+    {
+      layer: 'Layer 3',
+      name: 'Genspark',
+      role: '실행 가속기',
+      subtitle: 'Execution Accelerator',
+      color: 'orange',
+      icon: '⚡',
+      tech: ['Genspark API', 'AI Voice', 'Multimedia AI'],
+      functions: [
+        'AI 전화 통화 (음성 AI)',
+        '실시간 웹 검색',
+        '멀티미디어 분석/생성'
+      ],
+      dataFlow: 'Python → 실시간 실행 → 결과 반환'
+    },
+    {
+      layer: 'Layer 2',
+      name: 'Python/Cloud',
+      role: '인텔리전스 시스템',
+      subtitle: 'System of Intelligence',
+      color: 'purple',
+      icon: '🧠',
+      tech: ['Python', 'Cloud Run', 'LangChain', 'LLM API'],
+      functions: [
+        'LLM 오케스트레이션 (Claude, GPT-4)',
+        'R-Score 계산 엔진',
+        '웹 크롤링/스크래핑',
+        'PDF 자동 생성'
+      ],
+      dataFlow: 'Notion → 계산/분석 → Notion'
+    },
+    {
+      layer: 'Layer 1',
+      name: 'Notion',
+      role: '기록 시스템',
+      subtitle: 'System of Record',
+      color: 'blue',
+      icon: '💾',
+      tech: ['Notion API', 'PostgreSQL', 'PARA Structure'],
+      functions: [
+        'CRM: 협회/회원 마스터 DB',
+        'Pipeline: 영업 단계별 상태 관리',
+        'Knowledge: PARA 기반 지식 구조화',
+        '장기 기억 저장소'
+      ],
+      dataFlow: '모든 데이터의 최종 저장소'
+    }
+  ];
+
+  const getColorClasses = (color) => {
+    const colors = {
+      orange: { 
+        bg: 'bg-orange-500', 
+        light: 'bg-orange-50', 
+        border: 'border-orange-300',
+        gradient: 'from-orange-400 to-orange-600'
+      },
+      purple: { 
+        bg: 'bg-purple-500', 
+        light: 'bg-purple-50', 
+        border: 'border-purple-300',
+        gradient: 'from-purple-400 to-purple-600'
+      },
+      blue: { 
+        bg: 'bg-blue-500', 
+        light: 'bg-blue-50', 
+        border: 'border-blue-300',
+        gradient: 'from-blue-400 to-blue-600'
+      }
+    };
+    return colors[color];
+  };
+
+  return (
+    <div className="w-full h-full bg-white p-8">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">
+          FIG 4-1: ZOBIS 하이브리드 아키텍처 (3층 구조)
+        </h2>
+        <p className="text-sm text-gray-600">
+          Notion (기록) + Python (계산) + Genspark (실행)의 계층적 시스템 설계
+        </p>
+      </div>
+
+      {/* 3층 구조 다이어그램 */}
+      <div className="space-y-4 mb-8">
+        {layers.map((layer, idx) => {
+          const colors = getColorClasses(layer.color);
+          const isBottom = idx === layers.length - 1;
+          
+          return (
+            <div key={idx}>
+              {/* 레이어 카드 */}
+              <div className={`${colors.light} border-2 ${colors.border} rounded-lg p-5 shadow-lg`}>
+                {/* 헤더 */}
+                <div className={`bg-gradient-to-r ${colors.gradient} text-white rounded-md p-4 mb-4`}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <span className="text-3xl">{layer.icon}</span>
+                      <div>
+                        <div className="text-xs font-semibold opacity-90">{layer.layer}</div>
+                        <div className="text-xl font-bold">{layer.name}</div>
+                        <div className="text-sm opacity-90">{layer.subtitle}</div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-sm font-semibold">{layer.role}</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 콘텐츠 그리드 */}
+                <div className="grid grid-cols-3 gap-4">
+                  {/* 기술 스택 */}
+                  <div>
+                    <div className="text-sm font-semibold text-gray-700 mb-2">🛠 기술 스택</div>
+                    <div className="space-y-1">
+                      {layer.tech.map((tech, i) => (
+                        <div key={i} className="text-xs bg-white p-2 rounded border border-gray-200">
+                          {tech}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 핵심 기능 */}
+                  <div>
+                    <div className="text-sm font-semibold text-gray-700 mb-2">⚙️ 핵심 기능</div>
+                    <div className="space-y-1">
+                      {layer.functions.map((func, i) => (
+                        <div key={i} className="text-xs text-gray-700 flex items-start">
+                          <span className="text-blue-500 mr-1">•</span>
+                          <span>{func}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 데이터 흐름 */}
+                  <div>
+                    <div className="text-sm font-semibold text-gray-700 mb-2">🔄 데이터 흐름</div>
+                    <div className={`${colors.bg} bg-opacity-10 p-3 rounded text-xs text-gray-700 font-semibold`}>
+                      {layer.dataFlow}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 레이어 간 연결 화살표 */}
+              {!isBottom && (
+                <div className="flex justify-center py-2">
+                  <div className="flex flex-col items-center">
+                    <div className="text-gray-400 text-2xl">↓</div>
+                    <div className="text-xs text-gray-500 font-semibold">API 호출</div>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* 멀티 에이전트 시스템 */}
+      <div className="mb-6 p-5 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg border-2 border-gray-300">
+        <div className="font-bold text-gray-800 mb-4 text-lg">🤖 계층적 멀티 에이전트 시스템</div>
+        <div className="grid grid-cols-3 gap-4">
+          <div className="bg-white p-4 rounded-lg shadow">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-2xl">👑</span>
+              <div>
+                <div className="font-bold text-gray-800">Level 1</div>
+                <div className="text-xs text-gray-600">Master GEM</div>
+              </div>
+            </div>
+            <div className="text-sm font-semibold text-blue-600 mb-1">나실장</div>
+            <div className="text-xs text-gray-700">
+              전략 기획 및 최종 의사결정
+            </div>
+          </div>
+          <div className="bg-white p-4 rounded-lg shadow">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-2xl">🎯</span>
+              <div>
+                <div className="font-bold text-gray-800">Level 2</div>
+                <div className="text-xs text-gray-600">Domain Sub-GEM</div>
+              </div>
+            </div>
+            <div className="text-sm font-semibold text-purple-600 mb-1">사이버보험 전문가</div>
+            <div className="text-xs text-gray-700">
+              도메인별 위험 분석 및 영업 총괄
+            </div>
+          </div>
+          <div className="bg-white p-4 rounded-lg shadow">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-2xl">🏗️</span>
+              <div>
+                <div className="font-bold text-gray-800">Level 3</div>
+                <div className="text-xs text-gray-600">System Architect</div>
+              </div>
+            </div>
+            <div className="text-sm font-semibold text-green-600 mb-1">선과장 (Notion AI)</div>
+            <div className="text-xs text-gray-700">
+              시스템 아키텍트 및 KB 관리자
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 시스템 특징 */}
+      <div className="grid grid-cols-2 gap-4">
+        <div className="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+          <div className="font-semibold text-blue-800 mb-2">💡 아키텍처 설계 철학</div>
+          <ul className="text-xs text-gray-700 space-y-1">
+            <li>• <span className="font-semibold">계층 분리:</span> 기록-계산-실행의 명확한 책임 구분</li>
+            <li>• <span className="font-semibold">느슨한 결합:</span> API 기반 통신으로 확장성 확보</li>
+            <li>• <span className="font-semibold">단일 진실 원천:</span> Notion이 모든 데이터의 최종 저장소</li>
+            <li>• <span className="font-semibold">비동기 처리:</span> Cloud Run으로 스케일링 자동화</li>
+          </ul>
+        </div>
+        <div className="p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+          <div className="font-semibold text-green-800 mb-2">🚀 경쟁 우위</div>
+          <ul className="text-xs text-gray-700 space-y-1">
+            <li>• <span className="font-semibold">인력 고정:</span> 시스템 확장 시 인력 추가 불필요</li>
+            <li>• <span className="font-semibold">비용 효율:</span> 클라우드 기반으로 초기 투자 최소화</li>
+            <li>• <span className="font-semibold">빠른 반복:</span> Notion 기반으로 신속한 프로토타이핑</li>
+            <li>• <span className="font-semibold">데이터 축적:</span> 3년 데이터로 경쟁사 진입 장벽</li>
+          </ul>
+        </div>
+      </div>
+
+      {/* 기술 스택 요약 */}
+      <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+        <div className="font-semibold text-gray-800 mb-3">📦 전체 기술 스택 요약</div>
+        <div className="grid grid-cols-4 gap-3 text-xs">
+          <div>
+            <div className="font-semibold text-blue-600 mb-1">Storage</div>
+            <div className="text-gray-600">Notion, PostgreSQL</div>
+          </div>
+          <div>
+            <div className="font-semibold text-purple-600 mb-1">Backend</div>
+            <div className="text-gray-600">Python, Cloud Run</div>
+          </div>
+          <div>
+            <div className="font-semibold text-green-600 mb-1">AI/ML</div>
+            <div className="text-gray-600">Claude, GPT-4, LangChain</div>
+          </div>
+          <div>
+            <div className="font-semibold text-orange-600 mb-1">Integration</div>
+            <div className="text-gray-600">Genspark, APIs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ZOBISArchitecture;
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZOBIS 전문가 사이버 보험 전략</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .kpi-card {
+            background-color: #CCE8FE;
+            color: #00449E;
+            border-left: 5px solid #0380FE;
+        }
+        .kpi-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+        .kpi-label {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        .section-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #00449E;
+            margin-bottom: 1rem;
+        }
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: #0380FE;
+            font-weight: 500;
+            margin-bottom: 2rem;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .flow-step {
+            background-color: #CCE8FE;
+            color: #00449E;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+        }
+        .flow-arrow {
+            color: #0380FE;
+            font-size: 2rem;
+            font-weight: 700;
+            align-self: center;
+            margin: 0 0.5rem;
+        }
+        .text-deep-blue { color: #00449E; }
+        .bg-bright-blue { background-color: #0380FE; }
+        .text-bright-blue { color: #0380FE; }
+        .bg-pale-blue { background-color: #CCE8FE; }
+
+
+        .comparison-card {
+            border-left: 4px solid;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .check-icon {
+            color: #22C55E;
+        }
+        .x-icon {
+            color: #EF4444;
+        }
+        .venn-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            position: absolute;
+            opacity: 0.6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+   
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4">
+            <h1 class="text-2xl font-bold text-deep-blue">Lockton Korea: ZOBIS AI 레버리지 성장 전략</h1>
+        </nav>
+    </header>
+
+
+    <main class="container mx-auto px-6 py-8">
+
+
+        <section id="kpi" class="mb-12">
+            <h2 class="section-title text-center">AI 레버리지 성장 모델: 핵심 목표</h2>
+            <p class="section-subtitle text-center">FTE 3.0명 고정 투입으로 Year 5 매출 15억 원 달성</p>
+           
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                <div class="kpi-card p-6 rounded-lg shadow-lg">
+                    <div class="kpi-value">KRW 15억</div>
+                    <div class="kpi-label">Year 5 목표 매출</div>
+                </div>
+                <div class="kpi-card p-6 rounded-lg shadow-lg">
+                    <div class="kpi-value">3.0명</div>
+                    <div class="kpi-label">FTE 고정 투입 인력</div>
+                </div>
+                <div class="kpi-card p-6 rounded-lg shadow-lg">
+                    <div class="kpi-value">KRW 400억</div>
+                    <div class="kpi-label">잠재 시장 규모</div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="problem" class="mb-12">
+            <div class="card">
+                <h2 class="section-title">I. The Problem: 구조적 보장 공백</h2>
+                <p class="section-subtitle">기존 PI 보험의 '원인 기반 면책의 함정'</p>
+               
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-xl font-bold text-deep-blue mb-4">IG002: "The Causation Trap" 시각화</h3>
+                        <div class="relative w-full h-64 flex items-center justify-center">
+                            <div class="venn-circle bg-blue-400" style="left: 10%; top: 50%; transform: translateY(-50%);">
+                                <span class="text-white">PI 보험 보장<br/>(전문적 과실)</span>
+                            </div>
+                            <div class="venn-circle bg-indigo-400" style="right: 10%; top: 50%; transform: translateY(-50%);">
+                                <span class="text-white">사이버 보험 보장<br/>(기술적 위험)</span>
+                            </div>
+                            <div class="absolute z-10 text-center">
+                                <span class="text-6xl font-bold text-red-600">GAP</span>
+                                <p class="font-bold text-red-700 text-lg">이중 면책 함정</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-deep-blue mb-4">핵심 시나리오: 세무사 랜섬웨어</h3>
+                        <p class="mb-4">PI 보험은 '전문적 과실'이라는 **결과**에 초점을 맞추고, 사이버 면책 조항은 '사이버 행위'라는 **원인**을 면책합니다.</p>
+                        <p class="font-semibold text-deep-blue bg-pale-blue p-4 rounded-lg">
+                            사고 발생 시, 보험사는 고객에게 유리한 **결과(PI 책임)** 대신, 보험사에 유리한 **원인(사이버 행위)**을 들어 보상을 거부하게 되며, 이것이 **이중 면책의 함정(Double Exclusion Trap)**으로 작용합니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="market" class="mb-12">
+            <div class="card">
+                <h2 class="section-title">II. The Market: Affinity 채널 선점</h2>
+                <p class="section-subtitle">파일럿 시장(KSA/KCA)에서 최우선 확장 시장(KMA)으로</p>
+                <p class="mb-6">Affinity 모델은 집단 언더라이팅과 마케팅을 통해 획기적인 비용 절감이 가능합니다. 록톤은 KSA/KCA 파일럿 성공 이후, 약 14만 명 이상 회원 수의 **대한의사협회(KMA)**라는 압도적인 볼륨 시장을 최우선 확장 목표로 삼습니다.</p>
+                <div class="chart-container h-96">
+                    <canvas id="marketChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="solution" class="mb-12">
+            <h2 class="section-title text-center">III. The Solution: 듀얼 상품 및 ZOBIS 엔진</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+               
+                <div class="card">
+                    <h3 class="text-xl font-bold text-deep-blue mb-4">A. 록톤 듀얼 상품의 경쟁 우위</h3>
+                    <p class="mb-4">경쟁사의 B2C 상품은 사업자(B2B)의 핵심 요구사항을 충족하지 못합니다.</p>
+                    <table class="w-full table-auto border-collapse">
+                        <thead>
+                            <tr class="bg-pale-blue text-deep-blue">
+                                <th class="border p-3 text-left">전문직 필수 담보</th>
+                                <th class="border p-3 text-center">경쟁사 (B2C)</th>
+                                <th class="border p-3 text-center">록톤 듀얼 상품</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border p-3 font-medium">시스템 복구 비용 (Forensic)</td>
+                                <td class="border p-3 text-center text-red-600 font-bold text-2xl">❌</td>
+                                <td class="border p-3 text-center text-green-600 font-bold text-2xl">✅</td>
+                            </tr>
+                            <tr>
+                                <td class="border p-3 font-medium">영업 중단 손실 (BI)</td>
+                                <td class="border p-3 text-center text-red-600 font-bold text-2xl">❌</td>
+                                <td class="border p-3 text-center text-green-600 font-bold text-2xl">✅</td>
+                            </tr>
+                            <tr>
+                                <td class="border p-3 font-medium">제3자 배상 책임 (PI 통합)</td>
+                                <td class="border p-3 text-center text-red-600 font-bold text-2xl">❌</td>
+                                <td class="border p-3 text-center text-green-600 font-bold text-2xl">✅</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div class="card">
+                    <h3 class="text-xl font-bold text-deep-blue mb-4">IG003: ZOBIS R-Score Engine 프로세스</h3>
+                    <p class="mb-4">ZOBIS는 90% 이상의 수동 업무를 자동화하는 핵심 엔진입니다.</p>
+                    <div class="flex flex-col space-y-4">
+                        <div class="flow-step">
+                            <span class="font-bold text-lg">1. 데이터 수집 (Capture)</span>
+                            <p class="text-sm">외부 데이터가 Notion INBOX로 자동 수집</p>
+                        </div>
+                        <div class="flow-arrow self-center transform rotate-90">➔</div>
+                        <div class="flow-step">
+                            <span class="font-bold text-lg">2. AI 분석 (Analyze)</span>
+                            <p class="text-sm">LLM이 문서 자동 분류/요약 및 리스크 요소 추출</p>
+                        </div>
+                        <div class="flow-arrow self-center transform rotate-90">➔</div>
+                        <div class="flow-step">
+                            <span class="font-bold text-lg">3. R-Score 정량화 (Quantify)</span>
+                            <p class="text-sm">AI가 사무소별 리스크를 0~100점으로 정량화</p>
+                        </div>
+                        <div class="flow-arrow self-center transform rotate-90">➔</div>
+                        <div class="flow-step">
+                            <span class="font-bold text-lg">4. 자동 제안 (Action)</span>
+                            <p class="text-sm">R-Score 기반 최적 상품(Pass A/B) 자동 추천</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="economics" class="mb-12">
+            <h2 class="section-title text-center">IV. The Economics: AI 레버리지 증명</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="card">
+                    <h3 class="text-xl font-bold text-deep-blue mb-4">IG001: ZOBIS 레버리지: 매출 vs. 투입 인력</h3>
+                    <p class="mb-4">ZOBIS는 인력 증가 없이 매출의 비선형 성장을 가능하게 합니다. 이는 전통적 영업 모델 대비 획기적인 인건비 절감 효과를 의미합니다.</p>
+                    <div class="chart-container h-96">
+                        <canvas id="leverageChart"></canvas>
+                    </div>
+                </div>
+
+
+                <div class="card">
+                    <h3 class="text-xl font-bold text-deep-blue mb-4">B. 글로벌 검증: Affinity 성공 사례</h3>
+                    <p class="mb-4">록톤의 듀얼 전략(Pass A/B)은 이미 글로벌 시장에서 검증된 베스트 프랙티스를 차용합니다.</p>
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-lg bg-pale-blue">
+                            <h4 class="font-bold text-lg text-deep-blue">사례 1: ABA (미국 변호사 협회)</h4>
+                            <p class="text-deep-blue">그룹 할인 및 교육 연계 마케팅을 통한 **초기 가입 장벽 완화** 전략 (Pass A 근거).</p>
+                        </div>
+                        <div class="p-4 rounded-lg bg-pale-blue">
+                            <h4 class="font-bold text-lg text-deep-blue">사례 2: BMA (영국 의사 협회)</h4>
+                            <p class="text-deep-blue">PI-사이버 통합 클레임 처리 및 규제 벌금 보장을 통한 **고마진 독립형 상품** 전략 (Pass B 근거).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="action-plan" class="mb-12">
+            <div class="card text-center">
+                <h2 class="section-title">V. The Action Plan: Year 1 실행</h2>
+                <p class="section-subtitle">KRW 3억 원 투자 및 TF CTO 리더십 확보</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="text-left">
+                        <h3 class="text-xl font-bold text-deep-blue mb-4">Year 1 핵심 과제 (TF 실무 가이드)</h3>
+                        <ol class="list-decimal list-inside space-y-3 text-lg">
+                            <li class="font-medium"><span class="font-bold text-bright-blue">D+90:</span> Affinity 채널 독점 계약 확정</li>
+                            <li class="font-medium"><span class="font-bold text-bright-blue">D+120:</span> PI-사이버 듀얼 상품 최종 약관 확정</li>
+                            <li class="font-medium"><span class="font-bold text-bright-blue">D+150:</span> Affinity 교육 연계 마케팅 프로그램 개발</li>
+                            <li class="font-medium"><span class="font-bold text-bright-blue">D+180:</span> ZOBIS R-Score Engine V1.0 구축</li>
+                        </ol>
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <div class="kpi-card p-8 rounded-lg shadow-xl">
+                            <div class="kpi-label mb-2">Year 1 선행 투자</div>
+                            <div class="kpi-value text-5xl">KRW 3억</div>
+                            <div class="kpi-label mt-2">ZOBIS 시스템 및 인건비</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+       
+        <!-- IG006 ~ IG010 START -->
+        <section id="detailed-analysis" class="mb-12 pt-8">
+            <h2 class="section-title text-center text-deep-blue border-t pt-4">VI. 상세 데이터 분석 및 실행 근거 (IG006-IG010)</h2>
+
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+               
+                <!-- IG006: PI vs. Cyber Coverage Matrix (Table) -->
+                <div id="ig006" class="card md:col-span-2">
+                    <h3 class="text-xl font-bold text-deep-blue mb-4">IG006: 보장 공백 매트릭스 (5대 핵심 시나리오)</h3>
+                    <p class="section-subtitle text-gray-600 mb-4">록톤의 듀얼 상품만이 전문직의 복합 사고에 대한 **'완전 보장'**을 제공함을 입증합니다.</p>
+                    <table class="w-full table-auto border-collapse text-sm">
+                        <thead>
+                            <tr class="bg-pale-blue text-deep-blue">
+                                <th class="border p-2 text-left">사고 시나리오</th>
+                                <th class="border p-2 text-center">PI 단독 (기존)</th>
+                                <th class="border p-2 text-center">사이버 단독 (B2C)</th>
+                                <th class="border p-2 text-center">록톤 듀얼 상품</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border p-2">세무사 랜섬웨어 $\to$ 신고 지연</td>
+                                <td class="border p-2 text-center text-red-600 font-bold">❌</td>
+                                <td class="border p-2 text-center text-orange-400 font-bold">⚠️</td>
+                                <td class="border p-2 text-center check-icon font-bold">✅</td>
+                            </tr>
+                            <tr>
+                                <td class="border p-2">의료 EMR 마비 $\to$ 진료 지연</td>
+                                <td class="border p-2 text-center text-red-600 font-bold">❌</td>
+                                <td class="border p-2 text-center text-red-600 font-bold">❌</td>
+                                <td class="border p-2 text-center check-icon font-bold">✅</td>
+                            </tr>
+                            <tr>
+                                <td class="border p-2">법률사무소 피싱 $\to$ 기밀 유출</td>
+                                <td class="border p-2 text-center text-orange-400 font-bold">⚠️</td>
+                                <td class="border p-2 text-center text-red-600 font-bold">❌</td>
+                                <td class="border p-2 text-center check-icon font-bold">✅</td>
+                            </tr>
+                            <tr>
+                                <td class="border p-2">관세사 BEC 공격 $\to$ 오송금</td>
+                                <td class="border p-2 text-center text-red-600 font-bold">❌</td>
+                                <td class="border p-2 text-center check-icon font-bold">✅</td>
+                                <td class="border p-2 text-center check-icon font-bold">✅</td>
+                            </tr>
+                            <tr>
+                                <td class="border p-2">엔지니어 도면 해킹 $\to$ 시공 결함</td>
+                                <td class="border p-2 text-center text-orange-400 font-bold">⚠️</td>
+                                <td class="border p-2 text-center text-red-600 font-bold">❌</td>
+                                <td class="border p-2 text-center check-icon font-bold">✅</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="text-xs mt-2 text-gray-500">❌: 명시적 면책/미보장, ⚠️: 부분 보장/경계 분쟁 가능성, ✅: 완전 보장 (R2 보고서 기반)</p>
+                </div>
+               
+                <!-- IG007: Expert Cyber Risk Score (R-Score) -->
+                <div id="ig007" class="card">
+                    <h3 class="text-xl font-bold text-deep-blue mb-4">IG007: 전문가 그룹별 사이버 리스크 R-Score</h3>
+                    <p class="section-subtitle text-gray-600 mb-4">ZOBIS AI가 정량화한 리스크 점수(0-100점). 확장 우선순위의 근거가 됩니다.</p>
+                    <div class="chart-container h-64">
+                        <canvas id="ig007Chart"></canvas>
+                    </div>
+                </div>
+
+
+                <!-- IG008: ZOBIS vs. Traditional Broker (Comparison Card) -->
+                <div id="ig008" class="card">
+                    <h3 class="text-xl font-bold text-deep-blue mb-4">IG008: ZOBIS 시스템 영업 vs. 재래식 영업</h3>
+                    <p class="section-subtitle text-gray-600 mb-4">AI 레버리지를 통한 브로커 역할의 4대 핵심 전환점입니다.</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="comparison-card border-bright-blue text-deep-blue">
+                            <h4 class="font-bold text-md">재래식 영업</h4>
+                            <ul class="list-disc list-inside text-sm mt-2 space-y-1">
+                                <li>정성적 리스크 판단</li>
+                                <li>인력/시간에 비례한 영업</li>
+                            </ul>
+                        </div>
+                        <div class="comparison-card border-green-600 text-deep-blue">
+                            <h4 class="font-bold text-md">ZOBIS 시스템 영업</h4>
+                            <ul class="list-disc list-inside text-sm mt-2 space-y-1">
+                                <li><span class="check-icon">✓</span> R-Score 정량화</li>
+                                <li><span class="check-icon">✓</span> 시스템 속도에 비례</li>
+                            </ul>
+                        </div>
+                        <div class="comparison-card border-bright-blue text-deep-blue">
+                            <h4 class="font-bold text-md">재래식 영업</h4>
+                            <ul class="list-disc list-inside text-sm mt-2 space-y-1">
+                                <li>특정 상품 귀속 경향</li>
+                                <li>친분 기반 서비스</li>
+                            </ul>
+                        </div>
+                        <div class="comparison-card border-green-600 text-deep-blue">
+                            <h4 class="font-bold text-md">ZOBIS 시스템 영업</h4>
+                            <ul class="list-disc list-inside text-sm mt-2 space-y-1">
+                                <li><span class="check-icon">✓</span> 최적 상품 자동 매칭</li>
+                                <li><span class="check-icon">✓</span> 데이터 기반 컨설팅</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- IG009: Investment Allocation (Donut) -->
+                <div id="ig009" class="card">
+                    <h3 class="text-xl font-bold text-deep-blue mb-4">IG009: Year 1 선행 투자 (KRW 3억) 배분</h3>
+                    <p class="section-subtitle text-gray-600 mb-4">총 투자금 KRW 3억 원의 항목별 배분 현황입니다. 시스템 개발에 33% 집중됩니다.</p>
+                    <div class="chart-container h-64">
+                        <canvas id="ig009Chart"></canvas>
+                    </div>
+                </div>
+               
+                <!-- IG010: Dual Strategy Product Logic (Funnel) -->
+                <div id="ig010" class="card md:col-span-2">
+                    <h3 class="text-xl font-bold text-deep-blue mb-4">IG010: 듀얼 상품 전략 실행 로직 (Pass A $\to$ Pass B)</h3>
+                    <p class="section-subtitle text-gray-600 mb-4">글로벌 벤치마킹을 통해 도출된, 시장 침투 및 수익 극대화를 위한 단계적 전략입니다.</p>
+                    <div class="flex flex-row items-stretch justify-center space-x-2 md:space-x-4 pt-4">
+                        <div class="flow-step bg-bright-blue text-white" style="border-left: 5px solid white;">
+                            <span class="font-bold text-xl">Affinity Channel</span>
+                            <p class="text-sm mt-1">독점적 고객 접근권</p>
+                        </div>
+                        <div class="flow-arrow text-deep-blue">»</div>
+                        <div class="flow-step bg-pale-blue text-deep-blue">
+                            <span class="font-bold text-lg">Pass A (Penetration)</span>
+                            <p class="text-xs mt-1">그룹 할인 & 특약 확장 (침투율 확보)</p>
+                        </div>
+                        <div class="flow-arrow text-deep-blue">»</div>
+                        <div class="flow-step bg-bright-blue text-white">
+                            <span class="font-bold text-lg">R-Score Up-sell</span>
+                            <p class="text-xs mt-1">고위험군 자동 식별/추천</p>
+                        </div>
+                        <div class="flow-arrow text-deep-blue">»</div>
+                        <div class="flow-step bg-deep-blue text-white" style="border-left: 5px solid #0380FE;">
+                            <span class="font-bold text-xl">Pass B (High Margin)</span>
+                            <p class="text-sm mt-1">독립형 고한도 상품 (수익 극대화)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+       
+        <!-- IG011 ~ IG015 START -->
+        <section id="advanced-analysis" class="mb-12 pt-8">
+            <h2 class="section-title text-center text-deep-blue border-t pt-4">VII. 심층 전략 및 경제성 분석 (IG011-IG015)</h2>
+            <p class="section-subtitle text-center">P2 세부 실행 보고서의 실무적 깊이를 더하는 최종 5가지 인포그래픽입니다.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+               
+                <!-- IG011: PIPA Risk vs. Lockton Dual Mitigation (Stacked Bar) -->
+                <div id="ig011" class="card">
+                    <h3 class="text-xl font-bold text-deep-blue mb-4">IG011: PIPA 위반 리스크 노출 (보장 커버리지 비교)</h3>
+                    <p class="section-subtitle text-gray-600 mb-4">PIPA 관련 핵심 리스크 노출도 비교. 록톤 듀얼 상품이 95% 커버리지를 확보합니다.</p>
+                    <div class="chart-container h-64">
+                        <canvas id="ig011Chart"></canvas>
+                    </div>
+                </div>
+               
+                <!-- IG012: Affinity Penetration Potential -->
+                <div id="ig012" class="card">
+                    <h3 class="text-xl font-bold text-deep-blue mb-4">IG012: Affinity 시장 침투 잠재력</h3>
+                    <p class="section-subtitle text-gray-600 mb-4">Year 5 목표(17.6%)는 글로벌 잠재력(99%) 대비 매우 안전한 목표입니다.</p>
+                    <div class="flex flex-col items-center justify-center h-64">
+                        <div class="text-center mb-4">
+                            <p class="text-gray-500 text-lg">글로벌 Affinity 잠재 침투율</p>
+                            <span class="text-deep-blue font-extrabold text-6xl">99%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-8 mb-4">
+                            <div class="bg-bright-blue h-8 rounded-full text-white text-right pr-4 pt-1 font-bold" style="width: 17.6%">17.6%</div>
+                        </div>
+                        <p class="text-sm font-semibold text-deep-blue">록톤 Year 5 목표 침투율 (15,000명 기준)</p>
+                    </div>
+                </div>
+               
+                <!-- IG013: Affinity CAC Advantage (Bar) -->
+                <div id="ig013" class="card">
+                    <h3 class="text-xl font-bold text-deep-blue mb-4">IG013: 고객 확보 비용 (CAC) 절감 효과</h3>
+                    <p class="section-subtitle text-gray-600 mb-4">Affinity 채널을 활용한 영업 모델의 경제적 우위를 보여줍니다 (KRW 1000 단위).</p>
+                    <div class="chart-container h-64">
+                        <canvas id="ig013Chart"></canvas>
+                    </div>
+                </div>
+
+
+                <!-- IG014: CTO Hub Vision (Diagram) -->
+                <div id="ig014" class="card">
+                    <h3 class="text-xl font-bold text-deep-blue mb-4">IG014: ZOBIS CTO Hub Vision</h3>
+                    <p class="section-subtitle text-gray-600 mb-4">록톤이 AI 기반 지능형 허브(Intelligent Hub)로 포지셔닝되는 구조입니다.</p>
+                    <div class="flex flex-col items-center justify-center p-4 space-y-4">
+                        <div class="p-3 bg-deep-blue text-white font-bold rounded-full text-xl">ZOBIS HUB</div>
+                        <div class="grid grid-cols-2 gap-4 w-full text-deep-blue font-medium mt-4">
+                            <div class="p-3 bg-pale-blue rounded-lg text-center font-bold">다수 협회 (KSA, KMA)</div>
+                            <div class="p-3 bg-pale-blue rounded-lg text-center font-bold">다수 회원 (18만+ DB)</div>
+                            <div class="p-3 bg-pale-blue rounded-lg text-center font-bold">다수 보험사 (최적 상품 매칭)</div>
+                            <div class="p-3 bg-pale-blue rounded-lg text-center font-bold">다수 약관 (보장 공백 분석)</div>
+                        </div>
+                        <p class="text-center text-sm font-semibold text-bright-blue mt-4">» 조대표님 (TF CTO)의 AI 기반 전략적 통합 영역</p>
+                    </div>
+                </div>
+
+
+                <!-- IG015: Product Target - Pass A/B (Donut) -->
+                <div id="ig015" class="card md:col-span-2">
+                    <h3 class="text-xl font-bold text-deep-blue mb-4">IG015: 듀얼 상품 목표 배분 (수익 vs. 침투)</h3>
+                    <p class="section-subtitle text-gray-600 mb-4">Pass A는 시장 침투(그룹 확장)를, Pass B는 수익성(고마진)을 극대화합니다.</p>
+                    <div class="chart-container h-64">
+                        <canvas id="ig015Chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </main>
+   
+    <footer class="bg-deep-blue text-white text-center p-6 mt-12">
+        <p>&copy; 2025 Lockton Korea. ZOBIS 전략 기획.</p>
+    </footer>
+
+
+    <script>
+        function processLabels(labels, maxChars = 16) {
+            return labels.map(label => {
+                if (typeof label === 'string' && label.length > maxChars) {
+                    const words = label.split(' ');
+                    const lines = [];
+                    let currentLine = '';
+                    words.forEach(word => {
+                        if (word.length > maxChars) {
+                            if (currentLine) lines.push(currentLine.trim());
+                            lines.push(word);
+                            currentLine = '';
+                        } else if ((currentLine + word).length > maxChars) {
+                            lines.push(currentLine.trim());
+                            currentLine = word + ' ';
+                        } else {
+                            currentLine += word + ' ';
+                        }
+                    });
+                    if (currentLine) lines.push(currentLine.trim());
+                    return lines;
+                }
+                return label;
+            });
+        }
+       
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            } else {
+                return label;
+            }
+        };
+       
+        const sharedTooltipConfig = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: tooltipTitleCallback
+                    }
+                }
+            }
+        };
+
+
+        // IG004 (Market Sizing)
+        const marketChartLabels = processLabels(['한국세무사회 (KSA)', '한국관세사회 (KCA)', '대한의사협회 (KMA)']);
+        const ctxMarket = document.getElementById('marketChart').getContext('2d');
+        new Chart(ctxMarket, {
+            type: 'bar',
+            data: {
+                labels: marketChartLabels,
+                datasets: [{
+                    label: '협회 회원 수 (명)',
+                    data: [17000, 2000, 141899],
+                    backgroundColor: ['#33A0FF', '#66B9FE', '#00449E'],
+                    borderColor: '#00449E',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                ...sharedTooltipConfig,
+                maintainAspectRatio: false,
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '회원 수 (명)'
+                        }
+                    }
+                },
+                plugins: {
+                    ...sharedTooltipConfig.plugins,
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+
+        // IG001 (Leverage Model)
+        const leverageChartLabels = processLabels(['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5']);
+        const ctxLeverage = document.getElementById('leverageChart').getContext('2d');
+        new Chart(ctxLeverage, {
+            type: 'line',
+            data: {
+                labels: leverageChartLabels,
+                datasets: [
+                    {
+                        label: '총 매출 (억 원)',
+                        data: [1, 5, 8, 10, 15],
+                        borderColor: '#0380FE',
+                        backgroundColor: 'rgba(3, 128, 254, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        yAxisID: 'yRevenue',
+                        tension: 0.1
+                    },
+                    {
+                        label: '투입 인력 (FTE)',
+                        data: [3.0, 3.0, 3.0, 3.0, 3.0],
+                        borderColor: '#FF6384',
+                        backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                        borderWidth: 3,
+                        fill: false,
+                        yAxisID: 'yFTE',
+                        stepped: true
+                    }
+                ]
+            },
+            options: {
+                ...sharedTooltipConfig,
+                maintainAspectRatio: false,
+                responsive: true,
+                scales: {
+                    yRevenue: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: {
+                            display: true,
+                            text: '총 매출 (억 원)'
+                        },
+                        beginAtZero: true
+                    },
+                    yFTE: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        title: {
+                            display: true,
+                            text: '투입 인력 (FTE)'
+                        },
+                        min: 0,
+                        max: 5,
+                        grid: {
+                            drawOnChartArea: false,
+                        },
+                    }
+                },
+                plugins: {
+                    ...sharedTooltipConfig.plugins,
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+       
+        // IG007: Expert Cyber Risk Score (R-Score)
+        const ig007ChartLabels = processLabels(['대한의사협회', '한국공인회계사회', '한국세무사회', '한국관세사회']);
+        const ctxIG007 = document.getElementById('ig007Chart').getContext('2d');
+        new Chart(ctxIG007, {
+            type: 'bar',
+            data: {
+                labels: ig007ChartLabels,
+                datasets: [{
+                    label: '사이버 리스크 적합도 (0-100)',
+                    data: [95, 85, 82, 75],
+                    backgroundColor: ['#00449E', '#33A0FF', '#66B9FE', '#CCE8FE'],
+                    borderColor: '#00449E',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                ...sharedTooltipConfig,
+                indexAxis: 'y',
+                maintainAspectRatio: false,
+                responsive: true,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                },
+                plugins: {
+                    ...sharedTooltipConfig.plugins,
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+
+        // IG009: Investment Allocation (Donut)
+        const ig009ChartLabels = processLabels(['시스템 개발 (1억)', 'Year 1 인건비 (1.8억)', '마케팅/채널 연계 (0.2억)']);
+        const ctxIG009 = document.getElementById('ig009Chart').getContext('2d');
+        new Chart(ctxIG009, {
+            type: 'doughnut',
+            data: {
+                labels: ig009ChartLabels,
+                datasets: [{
+                    label: '투자 배분 (억 원)',
+                    data: [1.0, 1.8, 0.2],
+                    backgroundColor: ['#00449E', '#0380FE', '#66B9FE'],
+                    borderColor: 'white',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                ...sharedTooltipConfig,
+                maintainAspectRatio: false,
+                responsive: true,
+                plugins: {
+                    ...sharedTooltipConfig.plugins,
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+
+        // IG011: PIPA Risk vs. Lockton Dual Mitigation (Stacked Bar)
+        const ig011ChartLabels = processLabels(['PI 단독 (기존)', '사이버 단독 (B2C)', '록톤 듀얼 (통합)']);
+        const ctxIG011 = document.getElementById('ig011Chart').getContext('2d');
+        new Chart(ctxIG011, {
+            type: 'bar',
+            data: {
+                labels: ig011ChartLabels,
+                datasets: [
+                    {
+                        label: '미보장 리스크 노출도 (%)',
+                        data: [90, 70, 5],
+                        backgroundColor: '#FF6384',
+                        borderColor: '#FF6384',
+                        borderWidth: 1
+                    },
+                    {
+                        label: '보장 커버리지 (%)',
+                        data: [10, 30, 95],
+                        backgroundColor: '#00449E',
+                        borderColor: '#00449E',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                ...sharedTooltipConfig,
+                maintainAspectRatio: false,
+                responsive: true,
+                scales: {
+                    x: {
+                        stacked: true,
+                        title: {
+                            display: true,
+                            text: '상품 모델'
+                        }
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: '보장 범위 (%)'
+                        }
+                    }
+                },
+                plugins: {
+                    ...sharedTooltipConfig.plugins,
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+
+        // IG013: Affinity CAC Advantage (Bar)
+        const ig013ChartLabels = processLabels(['재래식 브로커 (개별)', '록톤 Affinity (집단)']);
+        const ctxIG013 = document.getElementById('ig013Chart').getContext('2d');
+        new Chart(ctxIG013, {
+            type: 'bar',
+            data: {
+                labels: ig013ChartLabels,
+                datasets: [{
+                    label: '고객 획득 비용 (KRW 1000 단위)',
+                    data: [500, 50], // 50만원 vs 5만원 (1/10)
+                    backgroundColor: ['#0380FE', '#00449E'],
+                    borderColor: '#00449E',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                ...sharedTooltipConfig,
+                maintainAspectRatio: false,
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'CAC (KRW 1000)'
+                        }
+                    }
+                },
+                plugins: {
+                    ...sharedTooltipConfig.plugins,
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+
+        // IG015: Product Target - Pass A/B (Donut)
+        const ig015ChartLabels = processLabels(['Pass A (침투율/확장)', 'Pass B (수익성/고마진)']);
+        const ctxIG015 = document.getElementById('ig015Chart').getContext('2d');
+        new Chart(ctxIG015, {
+            type: 'doughnut',
+            data: {
+                labels: ig015ChartLabels,
+                datasets: [{
+                    label: '전략적 목표 비중',
+                    data: [30, 70], // 30% 침투, 70% 수익
+                    backgroundColor: ['#66B9FE', '#00449E'],
+                    borderColor: 'white',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                ...sharedTooltipConfig,
+                maintainAspectRatio: false,
+                responsive: true,
+                plugins: {
+                    ...sharedTooltipConfig.plugins,
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
